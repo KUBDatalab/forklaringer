@@ -1,0 +1,20 @@
+---
+title: "Iterative Bayesian optimization of a classification model"
+author: "Christian Knudsen"
+date: "21/2/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+
+```
+
+
+der skal en bedre overskrift til - på dansk.
+
+
+Iterative Bayesian optimization of a classification model
+
+https://www.tidymodels.org/learn/work/bayes-opt/

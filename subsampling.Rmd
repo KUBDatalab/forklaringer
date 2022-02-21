@@ -1,0 +1,19 @@
+---
+title: "subsampling"
+author: "Christian Knudsen"
+date: "21/2/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+Hvordan håndterer vi datasæt med forskellige klasser - hvor der er ubalance 
+mellem forskellige klasser.
+
+Også her mere hvordan vi håndterer det på en tidy måde.
+
+https://www.tidymodels.org/learn/models/sub-sampling/

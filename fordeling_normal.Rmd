@@ -1,0 +1,69 @@
+---
+title: "Normalfordelingen"
+author: "Christian Knudsen"
+date: "21/2/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+# Hvad vil det sige at data er normaltfordelt
+
+Mange statistiske tests forudsætter at data er normalfordelt.
+
+Hvad vil det sige?
+
+En normalfordeling er en sandsynlighedsfordeling. Eller på dansk noget der
+fortæller os hvad sandsynligheden er for at observere noget bestemt.
+
+Her er et eksempel, kropstemperaturen hos en bæver.
+
+Hvis vi deler alle temperaturerne op i intervaller (36.2 til 36.6 grader, 36.7 til osv) 
+og tæller hvor mange målinger vi har i hvert interval. Og derefter tegner en søjle
+i hvert interval, hvis højde matcher antallet af observationer, får vi dette:
+
+```{r}
+beaver1 %>% ggplot(aes(x=temp)) +
+  geom_histogram(bins=25)
+```
+
+Det ligner lidt den klokkekurve, som de fleste har set på et tidspunkt:
+
+```{r}
+data.frame(x = seq(-5,5,.1)) %>% 
+  mutate(y = dnorm(x, mean = 0, sd = 1)) %>% 
+  ggplot(aes(x,y)) +
+  geom_path()
+```
+Når vi taler om at noget data er normaltfordelt, så dækker det over at fordelingen
+af data ligner normalfordelingen. Data behøver ikke være 100% fordelt på samme måde som
+normalfordelingen, de skal bare være tæt nok på.
+
+
+# Hvilke egenskaber har normalfordelingen?
+
+En normalfordeling er ikke bare en normalfordeling. Men der er to parametre der
+styrer hvordan den ser ud. En middelværdi, og en spredning. I kurven ovenfor,
+er middelværdien, gennemsnittet, af observationerne 0, og spredningen, eller standardafvigelsen, 1.
+
+Så man kan sagtens have en anden normalfordeling der ser anderledes ud, 
+eksempelvis denne:
+```{r}
+range(beaver1$temp)
+data.frame(x = seq(35, 39,.01)) %>% 
+  mutate(y = dnorm(x, mean = mean(beaver1$temp), sd = sd(beaver1$temp))) %>% 
+  ggplot(aes(x,y)) +
+  geom_path()
+```
+Det er også en normalfordeling, den har gennemsnit på 36.86, og en standardafvigelse
+på 0.193.
+
+Det er, ikke helt tilfældigt, gennemsnittet og standardafvigelsen for bæverens 
+kropstemperatur.
+
+Hvad er det i øvrigt vi ser? sandsynligheden for en bestemt observation
+sandsynligheden for at noget er større eller mindre
+den slags.

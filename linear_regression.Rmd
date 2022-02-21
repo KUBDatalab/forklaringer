@@ -1,0 +1,140 @@
+---
+title: "Lineær regression"
+author: "Christian Knudsen"
+date: "11/1/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+# TL;DR
+
+Formatter data på denne måde:
+```{r}
+cars
+```
+Kør:
+```{r}
+summary(lm(dist~speed, data=cars))
+```
+# noget længere
+
+Den lineære regression er nok den simpleste maskinlæringsalgoritme vi har.
+Og er den mekanik der ligger bag rigtig mange af de andre.
+
+Vi tager et kig på datasættet cars - der er indbygget i R.
+
+Det har 50 observationer, fra 1920'erne, af bilers hastighed - og deres bremselængde,
+den afstand de bevæger sig fra man træder på bremsen, til bilen stopper.
+
+Hastigheden er i miles i timen, og bremselængden er i fod. Vi starter lige med 
+at omregne til ikke-fjollede enheder. Og så plotter vi det.
+
+Vi plotter her dist, afstand, som funktion af speed, hastighed. Hvilket til at starte med
+blot er en fancy måde at sige at vi har hastighed på x-aksen og afstand på y-aksen:
+
+```{r}
+data <- cars %>% 
+  mutate(speed = speed*1.609344,
+         dist = dist*0.3048)
+
+data %>% 
+ggplot(aes(speed, dist)) +
+  geom_point()
+
+
+```
+Man kunne ud fra plottet få den tanke, at man kunne trække en ret linie gennem
+punkterne, for at se hvad sammenhængen er.
+
+Sådan en her eksempelvis.
+```{r}
+data %>% 
+ggplot(aes(speed, dist)) +
+  geom_point() +
+  geom_abline(slope = 0.7448, intercept = -5.3581)
+```
+
+Hvad kan man bruge den til? Jo, vi har ikke et bud på hvad bremselængden er ved 10 km i timen.
+Vi har ikke målt den. Det kan vi se ved at der ikke er et punkt over 10 på x-aksen.
+
+Har vi tegnet sådan en ret linie ind, kan vi komme med et bud på hvad bremselængden er.
+
+Den vil være `r 10*0.7448-5.3581` meter.
+
+Det kræver en ret præcis lineal. For jeg har ikke aflæst den, men beregnet den.
+
+Og det er øvelsen, vi skal ikke aflæse, vi skal beregne det, for vi skal have computeren
+til at gøre arbejdet for os.
+
+Det samme med at placere linien. Den gider vi heller ikke forsøge at placere med 
+en lineal og en blyant. Vi gider ikke gætte. Vi vil have computeren til at give os 
+den bedste linie.
+
+Hvordan gør man det? Det er der funktioner til. I R hedder den enkleste `lm()`.
+
+Funktionen finder den linie, hvor afstanden fra linien til de enkelte datapunkter,
+er mindst mulig. 
+
+
+Nogle ligger over, andre ligger under.
+Så normalt tager vi afstanden, ganger den med sig selv (kvadrerer den), lægger dem
+alle sammen sammen, og tager kvadratroden af dem. Og så forsøger vi at gøre det
+resultat mindst mulig, ved at ændre på linien.
+
+Linien er defineret af to ting. Dens hældning, hvor meget den stiger eller falder,
+i dette tilfælde stiger, per enhed på x-aksen. Hvis vi øger hastigheden med 1 km/h,
+stiger bremselængden med et eller andet. Det er hældningen. Den anden ting der 
+definerer linien er skæringen med y-aksen. Hvor krydse vores linie y-aksen.
+
+Man kunne også definere den efter hvor den skærer x-aksen. Men matematikken 
+bliver simplere hvis vi bruger y-aksen. Og vi kan godt lide at ting er simple.
+
+Vi vil ikke bekymre os så meget om hvordan algoritmen faktisk virker. Den 
+forklaring der er let at forstå, er ikke den algoritmen faktisk bruger. 
+
+Så lad os bare lade computeren lave modellen, så koncentrerer vi os om hvad den
+viser:
+
+```{r}
+lin_model <- lm(dist~speed, data = data)
+summary(lin_model)
+```
+Hvad ser vi?
+
+Vi ser hvilken formel vi har brugt. Det er Rs måde at gøre det på - dist ~ speed
+fortæller os at det er dist som funktion af speed. Vi bruger hastigheden til at 
+forsøge at forklare hvad bremselængden er.
+
+Så får vi nogle residualer. Det er den del af variationen i vores data der ikke bliver
+forklaret af vores model. Vi kan i vores plot se, at der er stort set ingen af punkterne der 
+faktisk ligger på linien. 
+
+Datapunktet ved den højeste hastighed, 40.23 km/h, fortæller os at den målte 
+bremselængde er 25.91 meter.
+
+Men når vi putter den hastighed ind i vores model, får vi at bremselængden,
+ifølge vores rette linie, skulle være 24.61 meter. Altså lidt mindre. Forskellen,
+`r 25.9080 - 24.60685` meter, er residualen for det punkt, den del af observationen,
+der ikke bliver forklaret af vores model. Der er sådan en residual for alle punkterne.
+Og i outputtet fra summary af vores model, får vi fordelingen af disse residualer.
+
+Vi får koefficienter. Husk at den rette linie er defineret af to værdier, hældningen,
+og skæringen med y-aksen. Det er såkaldete koefficienter i vores model.
+
+Intercept, eller skæringen, bliver estimeret til -5.3581. Og hældningen, den finder
+vi her som Speed, er 0.7448.
+
+Vi får et bud på standardfejlen for hver af koefficienterne. Jo tættere på 0 jo bedre.
+
+Vi får også en t-værdi. Det er den test-værdi vi bruger til at slå efter hvilken
+p-værdi vi får for hver af vores koefficienter.
+
+Det med p-værdier er lidt kompliceret. Men en hyppigt brugt forklaring, der er 
+ganske forkert, men til gengæld intuitivt forståelig, er sandsynligheden for at 
+
+
+mere konkret får vi at vide at vi er endda meget sikre på at 

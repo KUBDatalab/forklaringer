@@ -1,0 +1,23 @@
+---
+title: "Statistical analysis of contingency tables"
+author: "Christian Knudsen"
+date: "7/2/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+baseret på https://www.tidymodels.org/learn/statistics/xtabs/
+
+Dette er mere noter om tidymodels end så meget andet. Men vi ser på 
+chi-i-anden test af uafhængighed, og chi-i-ande goodness of fit.
+
+Vi starter med test af uafhængighed, der tester om der er en sammenhæng
+mellem to kategoriske variable.
+
+Og derefter til "goodness of fit" - som vi skal finde et bedre dansk ord for,
+der tester hvor godt fordelingen af en kategorisk variabel kan approximeres 
+med en teoretisk fordeling.
+

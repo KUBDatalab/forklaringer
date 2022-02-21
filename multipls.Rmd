@@ -1,0 +1,13 @@
+---
+title: "Multivariat analyse med PLS"
+author: "Christian Knudsen"
+date: "21/2/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+https://www.tidymodels.org/learn/models/pls/
+
+Multivariat analyse med PLS

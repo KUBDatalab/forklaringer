@@ -1,0 +1,13 @@
+---
+title: "nnet klassifikation"
+author: "Christian Knudsen"
+date: "21/2/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+https://www.tidymodels.org/learn/models/parsnip-nnet/
+
+træn en klassifikationsmodel på et neuralt netværk, og test dens performance

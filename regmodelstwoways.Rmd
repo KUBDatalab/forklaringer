@@ -1,0 +1,18 @@
+---
+title: "tovejs regressionsmodeller"
+author: "Christian Knudsen"
+date: "21/2/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## R Markdown
+Create and train different kinds of regression models with different computational engines.
+
+
+Og hvordan vi håndterer det i tidyverdenen
+https://www.tidymodels.org/learn/models/parsnip-ranger-glmnet/

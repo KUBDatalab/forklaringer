@@ -1,0 +1,17 @@
+---
+title: "Tuning parameter funktioner"
+author: "Christian Knudsen"
+date: "21/2/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+https://www.tidymodels.org/learn/develop/parameters/
+
+Når vi laver fits har vi ofte en parameter der skal tunes. Hvordan
+laver man sådan en funktion i tidymodels universet.
+
+
+
