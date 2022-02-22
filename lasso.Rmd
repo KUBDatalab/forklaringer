@@ -1,0 +1,59 @@
+---
+title: "lasso"
+author: "Christian Knudsen"
+date: "22/2/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Lest Absolute Shrinkage and Selection Operator.
+
+En regressions metode der gør to ting. Vælger variable, og foretager
+regularisering.
+
+```{r}
+library(glmnet)
+library(HDCI)
+library(mvtnorm)
+
+set.seed(47)
+n <- 200
+p <- 500
+s <- 10
+
+beta <- rep(0, p)
+beta[1:s] <- runif(s, 1/3, 1)
+x <- rmvnorm(n = n, mean = rep(0, p), method = "svd")
+signal <- sqrt(mean((x %*% beta)^2))
+sigma <- as.numeric(signal / sqrt(10))  # SNR=10
+y <- x %*% beta + rnorm(n)
+
+
+
+## Lasso estimator
+# for a given value of lambda
+set.seed(0)
+obj.escv <- escv.glmnet(x, y)
+obj <- Lasso(x, y, lambda = obj.escv$lambda.cv)
+# Lasso estimate of the regression coefficients
+obj$beta
+# intercept term
+obj$beta0
+# prediction
+mypredict(obj, newx = matrix(rnorm(10*p), 10, p))
+
+# for lambda choosing by cross-validation (cv) which uses Lasso in the cv fit
+set.seed(0)
+obj <- Lasso(x, y, fix.lambda = FALSE)
+
+# for lambda choosing by cross-validation (cv) which uses Lasso+OLS in the cv fit
+set.seed(0)
+obj <- Lasso(x, y, fix.lambda = FALSE, cv.OLS = TRUE)
+
+
+
+```
+
