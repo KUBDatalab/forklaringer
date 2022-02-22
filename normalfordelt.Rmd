@@ -82,7 +82,7 @@ ToothGrowth %>%
   geom_qq_line()
 ```
 Den rette linie er normalfordelingen. Og punkterne er vores observationer. 
-Og det er ikke hel t skævt.
+Og det er ikke helt skævt.
 
 Kan vi få sat tal på?
 
