@@ -100,7 +100,7 @@ i forhold til hvad de burde være.
 Kolmogorov-smirnov testen kan bruges til flere ting. her tester vi sandsynligheden
 for at vores data er trukket ud af en normalfordeling.
 
-Anderson-Darling tester for normalitet. 
+Anderson-Darling tester også for normalitet. 
 
 
 
@@ -119,4 +119,10 @@ ToothGrowth %>%
 
 ```
 
-Man kan også beregne KL divergensen.
+Man kan også beregne KL divergensen - det er der en separat note om
+
+
+```{r}
+
+```
+
