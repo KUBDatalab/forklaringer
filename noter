@@ -1,0 +1,25 @@
+Noter
+
+Signifikans test for binære - binmiale resultater (chi^2, eller for små stikprøver, eller ubalancerede klasser, fischers exact test)
+
+Signifikans tests for kontinuærte, (normalish) variable - Welch t-test
+
+Signifikans tests for multiple count (multinomiale) data: chi^2 med k-1 frihedsgrader
+
+Antagelser i uparrede generiske t-tests (uafhængige samples, normalfordeling. Non-normal virker for stor N)
+
+one-sample t-test formel: diff of means divideret med standared error for mean
+
+Welsch -t-test statisktidsk formel. To-sample, uafhængig, uparret, ulige størrelser, ulige varians: diff of means divideret med stdardard error af mean
+
+Risici ved gentagen signifikans test - hvordan. Nogen tests vil tilfældigt, men forkert,l vise signifikans. Bonferoni korrektion. (DVS tilføj bonferoni korrektion)
+
+
+Binomial fordelingen
+poisson fordelingen
+geometrisk fordeling
+negativ binomial fordeling
+hypergeometrisk fordeling
+normalfordeling
+power-law distributions
+
