@@ -1,0 +1,98 @@
+---
+title: "Confirmatory Factor Analysis"
+author: "Christian Knudsen"
+date: "2022-10-28"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+til det bruger vi biblioteket lavaan, latent variable analysis.
+
+https://rpubs.com/isbell_daniel/efa_cfa_intro
+
+```{r}
+library(lavaan) 
+library(tidyverse)
+library(psych)
+```
+Et klassisk datasæt til formålet. Holzinger-Swineford. Kognitive tests af 
+7. og 8. klasses elever fra to forskellige skoler. Som navnet antyder,
+foretaget i 1939.
+
+
+```{r}
+glimpse(HolzingerSwineford1939)
+```
+
+De unge mennesker blev testet på 9 parametre.
+
+* x1 visuel opfattelse
+* x2 noget med terninger
+* x3 noget med lozenges
+* x4 paragraph comprehension
+* x5 sentence completion
+* x6 word meaning
+* x7 speeded addition
+* x8 speeded counting of dots
+* x9 speeded discrimination straight and curved capitals
+
+Tesen er at der i deres test er en visuel faktor. x1, x2 og x3
+en sproglig faktor, x4, x5 og x6
+og en hurtighedsfaktor
+x7, x8 og x9
+
+
+vi opstiller en model
+
+```{r}
+HS.model <- 'visual  =~ x1 + x2 + x3
+             textual =~ x4 + x5 + x6
+             speed   =~ x7 + x8 + x9'
+```
+
+
+```{r}
+fit <- cfa(HS.model, data = HolzingerSwineford1939)
+data <- HolzingerSwineford1939
+summary(fit)
+```
+Og hvad pokker viser det så?
+
+
+Hvad er det?
+
+Vi tror nok at x1,x2 og x3 siger noget om nogle visuelle evner.
+
+Vi måler nogle ting, og postulerer, at de afspejler noget underliggende, en generel
+visuel begavelse eller noget i den retning.
+
+
+Er vi stringente, bruger vi CFA til at bekræfte resultatet af en EFA (exploratory 
+factor analysis) hvor ideen er at identificere de underliggende faktorer.
+
+
+
+Hvordan gør vi?
+
+
+```{r}
+hs.efa <- fa(select(HolzingerSwineford1939, x1:x9), nfactors = 8, 
+             rotate = "none", fm = "ml")
+
+hs.efa
+```
+
+```{r}
+plot(hs.efa$e.values)
+```
+```{r}
+library(GPArotation)
+hs.efa3 <- fa(select(HolzingerSwineford1939, x1:x9), nfactors = 3, rotate = "oblimin", fm = "ml")
+
+hs.efa3
+```
+
+It’s important to note that it is not good practice to use a CFA to ‘confirm’ the findings of an EFA - it’s better to use an EFA to help determine the number of factors, but then to collect more data to test one or more competing models based on that general factorization.
