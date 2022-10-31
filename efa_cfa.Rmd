@@ -9,15 +9,47 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-til det bruger vi biblioteket lavaan, latent variable analysis.
+## Hvad er Confirmatory Factor Analysis?
 
-https://rpubs.com/isbell_daniel/efa_cfa_intro
+Vi har nogen observationer af ting. Hvor god er en skoleelev til at løse 
+rumlige opgaver, forstå tekster og ord. Hvor hurtigt kan samme elev lægge tal 
+sammen, tælle prikker på et stykke pair, og se forskel på forskellige bogstaver.
+
+Vores tese er, at evnen til at forstå en sætning, gøre en sætning færdig, og 
+vide hvad ord betyder, grundlæggende ikke er udtryk for tre forskellige 
+færdigheder, men har en underliggende faktor, der beskriver en tekstuel
+forståelse - måske intelligens i mangel af bedre ord.
+
+Og at hastigheden hvormed der kan tælles prikker, lægges tal sammen og 
+kendes forskel på bogstaver, heller ikke er udtryk for tre forskellige færdigheder,
+men for en *anden* underliggende faktor, der beskriver hurtighed.
+
+Tesen er, at hvis eleven scorer højt på den underliggende faktor, så scorer
+eleven også højt på de tre variable, der er knyttet til denne underliggende 
+faktor.
+
+Vi vil med andre ord se, at de tre variable varierer sammen, og uafhængigt af
+de andre variable.
+
+I Confirmatory factor analysis, har vi opstillet en tese om hvor mange 
+underliggende faktorer der er, og hvilke variable der forklares af disse 
+faktorer. 
+
+Ordene vi bruger, er at vi har manifeste variable - det er dem vi måler. 
+Og latenten variable, det er dem vi forsøger at identificere.
+
+Metoden er meget brugt i psykologien, hvorfra eksemplerne også stammer.
+
+Til det bruger vi biblioteket lavaan, latent variable analysis.
+
 
 ```{r}
 library(lavaan) 
 library(tidyverse)
 library(psych)
 ```
+## hvordan gør vi?
+
 Et klassisk datasæt til formålet. Holzinger-Swineford. Kognitive tests af 
 7. og 8. klasses elever fra to forskellige skoler. Som navnet antyder,
 foretaget i 1939.
@@ -45,7 +77,7 @@ og en hurtighedsfaktor
 x7, x8 og x9
 
 
-vi opstiller en model
+vi opstiller en model, der ser lidt usædvanlig ud:
 
 ```{r}
 HS.model <- 'visual  =~ x1 + x2 + x3
@@ -53,46 +85,126 @@ HS.model <- 'visual  =~ x1 + x2 + x3
              speed   =~ x7 + x8 + x9'
 ```
 
+Så fitter vi modellen på vores data:
 
 ```{r}
 fit <- cfa(HS.model, data = HolzingerSwineford1939)
-data <- HolzingerSwineford1939
-summary(fit)
 ```
-Og hvad pokker viser det så?
+
+Og ser hvordan fittet ser ud:
+```{r}
+fit
+```
+
+Vupti, p-værdi på 0,000, alt er godt, vores model ser fin ud.
+
+Hvis vi godt vil kigge nærmere på resultatet:
+```{r}
+summary(fit, standardized=TRUE, fit.measures=TRUE, rsquare=TRUE)
+```
+
+Vi kan se nærmere på covarianser
+```{r}
+fitted(fit)
+
+```
+Koefficienter:
+```{r}
+coef(fit)
+```
+Og residualerne:
+```{r}
+resid(fit, type = "normalized")
+```
+Vi kan også få et fint plot med vores fit. Der kan vi bruge pakken *semPlot*:
+
+```{r}
+library(semPlot)
+semPaths(fit, "std", layout = "tree", intercepts = F, residuals = T, nDigits = 2, 
+         label.cex = 1, edge.label.cex=.95, fade = F)
+```
 
 
-Hvad er det?
-
-Vi tror nok at x1,x2 og x3 siger noget om nogle visuelle evner.
-
-Vi måler nogle ting, og postulerer, at de afspejler noget underliggende, en generel
-visuel begavelse eller noget i den retning.
-
+## Men det er ikke første skridt.
 
 Er vi stringente, bruger vi CFA til at bekræfte resultatet af en EFA (exploratory 
-factor analysis) hvor ideen er at identificere de underliggende faktorer.
+factor analysis) hvor ideen er at identificere de latente variable.
 
+Vi kan godt komme med et kvalificeret bud i dette tilfælde. Især hvis vi på
+forhånd ved at der skal være tre latente variable.
 
+## Eksplorativ Faktor Analyse
+
+Det er teknikken når vi skal identificere de latente faktorer.
 
 Hvordan gør vi?
 
+Funktionen hedder fa, for faktor analyse. Den kommer fra biblioteket *psych*:
 
 ```{r}
 hs.efa <- fa(select(HolzingerSwineford1939, x1:x9), nfactors = 8, 
              rotate = "none", fm = "ml")
-
 hs.efa
 ```
+
+Når vi skal finde ud af hvor mange latente variable der bør bruges er en af 
+måderne at lave et screeplot:
 
 ```{r}
 plot(hs.efa$e.values)
 ```
+
+Det giver os et bud på hvor meget forklaringskraft vores model har med forskellige
+antal latente variable. Vi får rigtig meget ekstra forklaringskraft ved at 
+gå fra en til to latente variable. En sjat mere med at gå fra to til tre, og 
+endnu mere ved at gå fra tre til fire. Mens det at tilføje en femte latent
+variabel ikke giver ret meget mere. 
+
+Vi kan lave yderligere et plot:
+```{r}
+fa.parallel(select(HolzingerSwineford1939, x1:x9), fa = "fa", fm = "ml")
+```
+Her sammenligner vi vores data, som forklaret i modellen (blå linie) med 
+simuleret, tilfældig data (røde linier). Det ser ud til at 3 faktorer ligger over
+tilfældig støj. Tilføjer vi en fjerde latent variabel til modellen ligger
+den ekstra forklaringskraft nede i støjen.
+
+Så vi går efter tre latente variable.
+
+Når vi så skal finde ud af hvilke manifeste variable der bør høre til hver af 
+de tre latente variable, skal vi bruge en ekstra pakke:
+
 ```{r}
 library(GPArotation)
+```
+
+
+```{r}
 hs.efa3 <- fa(select(HolzingerSwineford1939, x1:x9), nfactors = 3, rotate = "oblimin", fm = "ml")
 
 hs.efa3
 ```
 
-It’s important to note that it is not good practice to use a CFA to ‘confirm’ the findings of an EFA - it’s better to use an EFA to help determine the number of factors, but then to collect more data to test one or more competing models based on that general factorization.
+Her ser vi, at de manifeste variable: x1, x2 og x3, har høj loading for 
+den latente faktor ML3. 
+
+De manifeste variable x4, x5 og x6 har høj loading for den latente faktor ML1.
+
+Og de manifeste variable x7, x8 og x9 har høj loading for den latente faktor ML2.
+
+Det passer, ikke ganske tilfældigt, med den model vi opstillede under 
+Confirmatory Factor Analysis afsnittet.
+
+## Skal vi være stringente?
+
+Det er folk sjældent. Men det bør vi. Det vi bør gøre, er at indsamle data,
+lave vores eksplorative faktor analyse, og opstille modellen.
+
+Herefter samler vi nyt data ind, og bruger det til at bekræfte vores model.
+
+I praksis bruger folk samme datasæt til begge dele. Det er en diskussion værd
+om det er god praksis, og vi bør fortælle de studerende at de snyder. 
+
+Det gør alle andre også, så vi skal nok ikke fortælle dem at de ikke må, men at 
+når de gør det som alle andre også burde lade være med, så skal de beskrive 
+at de "snyder".
