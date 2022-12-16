@@ -245,10 +245,12 @@ $R_2 = c + d$
 $C_1 = a + c$
 $C_2 = b + d$
 og
-$N = a + b + c + d$
+
+ad $N = a + b + c + d$ adf 
 
 
-$P_0 = \frac{a + c}{N}$ 
+
+$$P_0 = \frac{a + c}{N}$$
 
 Det var den lette.
 
