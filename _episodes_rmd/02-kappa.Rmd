@@ -11,7 +11,7 @@ objectives:
 keypoints:
 - "FIXME"
 source: Rmd
-math: TRUE
+math: yes
 ---
 
 ```{r, include = FALSE}
@@ -147,6 +147,7 @@ tribble(~`Value of K`, ~`Level of agreement`, ~`% of data that are reliable`,
         ) %>% 
   knitr::kable(align = "llr")
 ```
+
 Men den er nok lidt kæk i sine vurderinger. 61% enighed betragtes som godt.
 Det er ofte ikke helt godt nok.
 Så overvej nøje hvad den faktisk bruges til. I et klinisk laboratorium er det 

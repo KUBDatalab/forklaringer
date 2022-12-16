@@ -53,7 +53,7 @@ $RSS = SUM(yi - ^y_i)^2$
 
 I lasso, forsøger vi at minimere:
 
-$RSS + lambda * summen af beta_j$
+\(RSS + lambda * summen af beta_j\)
 
 hvor j går fra 1 til p (antallet af variable vi har i vores model), og lambda
 er større end eller lig 0.
