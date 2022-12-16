@@ -104,4 +104,3 @@ exclude:
 
 # Turn on built-in syntax highlighting.
 highlighter: rouge
-math: yes
