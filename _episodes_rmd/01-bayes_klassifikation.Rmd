@@ -1,0 +1,32 @@
+---
+title: "Bayes klassifikation"
+teaching: 42
+exercises: 47
+questions: 
+- "FIXME"
+
+objectives:
+- "FIXME"
+
+keypoints:
+- "FIXME"
+source: Rmd
+---
+
+```{r, include = FALSE}
+source("../bin/chunk-options.R")
+knitr_fig_path("01-")
+library(tidyverse)
+library(palmerpenguins)
+library(GGally)
+library(ggExtra)
+library(patchwork)
+```
+
+
+der skal en bedre overskrift til - på dansk.
+
+
+Iterative Bayesian optimization of a classification model
+
+https://www.tidymodels.org/learn/work/bayes-opt/
