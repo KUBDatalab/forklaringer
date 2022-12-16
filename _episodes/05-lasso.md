@@ -43,7 +43,7 @@ der minimerer forskellen på hvad vores model forudsiger og de "rigtige" data.
 
 Det er typisk RSS (kvadrerede residualer).
 
-$RSS = SUM(yi - ^y_i)^2$
+\\(RSS = SUM(yi - ^y_i)^2\\)
 
 I lasso, forsøger vi at minimere:
 
