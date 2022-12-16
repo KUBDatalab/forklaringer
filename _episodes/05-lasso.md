@@ -34,7 +34,7 @@ Det kan gøre det vanskeligt at fitte og fortolke modellen.
 
 Når vi fitter modeller, forsøger vi at finde koefficienter til modellen 
 
-$y = a_1*x_1 + a_2*x_2 + a_3*x_3 +....$
+$$y = a_1*x_1 + a_2*x_2 + a_3*x_3 +....$$
 
 Altså a_1, a_2, a_3 etc.
 
