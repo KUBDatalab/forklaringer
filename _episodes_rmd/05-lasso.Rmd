@@ -11,6 +11,7 @@ objectives:
 keypoints:
 - "FIXME"
 source: Rmd
+math: yes
 ---
 
 ```{r, include = FALSE}
