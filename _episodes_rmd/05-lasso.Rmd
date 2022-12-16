@@ -1,15 +1,30 @@
 ---
 title: "lasso"
-author: "Christian Knudsen"
-date: "22/2/2022"
-output: html_document
+teaching: 0
+exercises: 0
+questions: 
+- "FIXME"
+
+objectives:
+- "FIXME"
+
+keypoints:
+- "FIXME"
+source: Rmd
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r, include = FALSE}
+source("../bin/chunk-options.R")
+knitr_fig_path("05-")
+library(tidyverse)
+library(palmerpenguins)
+library(GGally)
+library(ggExtra)
+library(patchwork)
 ```
 
-Lest Absolute Shrinkage and Selection Operator.
+
+Least Absolute Shrinkage and Selection Operator.
 
 En regressions metode der gør to ting. Vælger variable, og foretager
 regularisering.
@@ -25,19 +40,19 @@ Det kan gøre det vanskeligt at fitte og fortolke modellen.
 
 Når vi fitter modeller, forsøger vi at finde koefficienter til modellen 
 
-y = a1*x1 + a2*x2 + a3*x3 +....
+$y = a_1*x_1 + a_2*x_2 + a_3*x_3 +....$
 
-Altså a1, a2, a3 etc.
+Altså a_1, a_2, a_3 etc.
 
 der minimerer forskellen på hvad vores model forudsiger og de "rigtige" data.
 
 Det er typisk RSS (kvadrerede residualer).
 
-RSS = SUM(yi - ^y_i)^2
+$RSS = SUM(yi - ^y_i)^2$
 
 I lasso, forsøger vi at minimere:
 
-RSS + lambda * summen af beta_j
+$RSS + lambda * summen af beta_j$
 
 hvor j går fra 1 til p (antallet af variable vi har i vores model), og lambda
 er større end eller lig 0.
