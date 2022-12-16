@@ -45,7 +45,7 @@ beaver1 %>% ggplot(aes(x=temp)) +
 
 Det ligner lidt den klokkekurve, som de fleste har set på et tidspunkt:
 
-```{r}
+```{r klokkekurven, echo = F}
 data.frame(x = seq(-5,5,.1)) %>% 
   mutate(y = dnorm(x, mean = 0, sd = 1)) %>% 
   ggplot(aes(x,y)) +
