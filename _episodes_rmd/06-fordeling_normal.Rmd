@@ -1,15 +1,28 @@
 ---
 title: "Normalfordelingen"
-author: "Christian Knudsen"
-date: "21/2/2022"
-output: html_document
+teaching: 0
+exercises: 0
+questions: 
+- "FIXME"
+
+objectives:
+- "FIXME"
+
+keypoints:
+- "FIXME"
+source: Rmd
+math: yes
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r, include = FALSE}
+source("../bin/chunk-options.R")
+knitr_fig_path("06-")
 library(tidyverse)
+library(palmerpenguins)
+library(GGally)
+library(ggExtra)
+library(patchwork)
 ```
-
 # Hvad vil det sige at data er normaltfordelt
 
 Mange statistiske tests forudsætter at data er normalfordelt.
@@ -32,7 +45,7 @@ beaver1 %>% ggplot(aes(x=temp)) +
 
 Det ligner lidt den klokkekurve, som de fleste har set på et tidspunkt:
 
-```{r}
+```{r klokkekurven, echo = F}
 data.frame(x = seq(-5,5,.1)) %>% 
   mutate(y = dnorm(x, mean = 0, sd = 1)) %>% 
   ggplot(aes(x,y)) +
