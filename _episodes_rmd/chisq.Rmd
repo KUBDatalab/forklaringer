@@ -1,11 +1,29 @@
 ---
-title: "Chi-i-anden"
-author: "Christian Knudsen"
-date: "7/2/2022"
-output: html_document
+title: "Bayes klassifikation"
+teaching: 42
+exercises: 47
+questions: 
+- "FIXME"
+
+objectives:
+- "FIXME"
+
+keypoints:
+- "FIXME"
+source: Rmd
 ---
 
-```{r setup, include=FALSE}
+```{r, include = FALSE}
+source("../bin/chunk-options.R")
+knitr_fig_path("02-")
+library(tidyverse)
+library(palmerpenguins)
+library(GGally)
+library(ggExtra)
+library(patchwork)
+```
+
+```{r setup, include=FALSE, eval = F}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(KUBDatalab)
@@ -25,12 +43,12 @@ data_1 <- data %>% select(-hus)
 # TL;DR
 
 Formatter data på denne måde:
-```{r}
+```{r, eval = F}
 data
 ```
 
 Testen kan/skal kun bruge tal, så vi skiller os af med den første kolonne. Dernæst:
-```{r}
+```{r, eval = F}
 chisq.test(data_1)
 ```
 
@@ -95,7 +113,7 @@ er igen baseret på data trukket fra wikidata.
 
 Det giver os disse tælletal:
 
-```{r}
+```{r, eval = F}
 data %>% kable()
 ```
 Det er de faktuelle optællinger. Vi vil nu gerne vide om der er forskel på kønsfordelingen
@@ -108,7 +126,7 @@ hvis der ikke er forskel.
 
 Når vi skal finde de forventede tælletal, starter vi med række og kolonne totaler:
 
-```{r}
+```{r, eval = F}
 data %>% 
   mutate(række_total = female + male) %>% 
   add_row(hus = "kolonne_total", female = 14+5+6+11, male = 20+11+9+14, række_total= 34+16+15+25)
@@ -133,7 +151,7 @@ skal 40% af vores 34 gryffindors være af hunkøn:
 Den beregning laver vi for alle cellerne i vores datasæt, og får:
 
 
-```{r echo=F}
+```{r echo=F, eval = F}
 chisq.test(data_1)$expected %>% kable()
 ```
 
@@ -149,12 +167,12 @@ Eksempelvis for kvindelige gryffindors:
 
 Det gør vi så for alle kombinationerne, og lægger tallene sammen.
 
-```{r echo=F}
+```{r echo=F, eval = F}
 chisq.test(data_1)$residuals^2
 ```
 
 Lægger vi alle de tal sammen, får vi:
-```{r}
+```{r, eval = F}
 sum(chisq.test(data_1)$residuals^2)
 ```
 
@@ -189,7 +207,7 @@ Det giver i dette tilfælde (4-1) * (2-1) = 3
 Chi-i-anden værdien for alpha = 0.05, og tre frihedsgrader (df) er 7.815
 
 Hvordan finder vi den? Det gør vi på denne måde:
-```{r}
+```{r, eval = F}
 qchisq(p=0.05, df=3, lower.tail = F)
 ```
 lower.tail = FALSE angiver at vi får P[X>x]. Det skal der lige graves i.
@@ -204,7 +222,7 @@ Det kan vi så IKKE. Der lader ikke til at være forskel på kønsfordelingen i 
 
 Alt det her gør vi i praksis ikke. Det vi gør er at kaste vores data ind i 
 den rigtige funktion:
-```{r}
+```{r, eval = F}
 chisq.test(data_1)
 ```
 Det giver os vores test-værdi. Men den kigger vi heller ikke på.
@@ -247,50 +265,50 @@ Det er ikke det samme som at vi kan konkludere at H_a er sand. Blot at H_0 ikke 
 
 # Hvad får vi ellers:
 
-```{r}
+```{r, eval = F}
 test <- chisq.test(data_1)
 
 test
 ```
 der er en del andet output der kan være interessant:
-```{r}
+```{r, eval = F}
 test$residuals
 ```
 det var dem vi selv beregnede. sådan da. der er noget med nogle kvadrater. 
 
-```{r}
+```{r, eval = F}
 sqrt(3.29)
 ```
 Sådan ca. Og hvis vi kvadrerer alle tallene og lægger dem sammen:
-```{r}
+```{r, eval = F}
 sum(test$residuals^2)
 ```
 Får vi søreme vores testværdi!
 
 Som vi også kan trække ud på denne måde:
-```{r}
+```{r, eval = F}
 test$statistic
 ```
 
 
 Hvis vi ønsker at se de forventede værdier:
-```{r}
+```{r, eval = F}
 test$expected
 ```
 
 Og skulle vi have glemt hvilke tal vi puttede ind i funktionen:
-```{r}
+```{r, eval = F}
 test$observed
 ```
 Skal vi bruge den beregnede p-værdi, så er den der også:
-```{r}
+```{r, eval = F}
 test$p.value
 ```
 Tilsvarende med antallet af frihedsgrader:
-```{r}
+```{r, eval = F}
 test$parameter
 ```
 Har vi glemt hvad det var for en test vi lavede ligger den her:
-```{r}
+```{r, eval = F}
 test$method
 ```
