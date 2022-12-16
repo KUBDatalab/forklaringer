@@ -13,7 +13,7 @@ objectives:
 keypoints:
 - "FIXME"
 source: Rmd
-math: yes
+math: TRUE
 ---
 
 
