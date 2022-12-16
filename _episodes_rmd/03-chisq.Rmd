@@ -1,7 +1,7 @@
 ---
-title: "Bayes klassifikation"
-teaching: 42
-exercises: 47
+title: "chi-squared"
+teaching: 0
+exercises: 0
 questions: 
 - "FIXME"
 
@@ -15,7 +15,7 @@ source: Rmd
 
 ```{r, include = FALSE}
 source("../bin/chunk-options.R")
-knitr_fig_path("02-")
+knitr_fig_path("03-")
 library(tidyverse)
 library(palmerpenguins)
 library(GGally)
@@ -26,7 +26,7 @@ library(patchwork)
 ```{r setup, include=FALSE, eval = F}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
-library(KUBDatalab)
+
 library(knitr)
 type_of_movie <- c("Action", "Comedy", "Family", "Horror")
 snacks <- c(50, 125, 90, 45)
