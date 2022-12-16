@@ -13,7 +13,7 @@ objectives:
 keypoints:
 - "FIXME"
 source: Rmd
-math: TRUE
+math: yes
 ---
 
 
@@ -190,6 +190,7 @@ har en tabel:
 |0.60 - 0.79 |Moderate           |                    35 - 63%|
 |0.80 - 0.90 |Strong             |                    64 - 81%|
 |Above 0.90  |Almost Perfect     |                   82 - 100%|
+
 Men den er nok lidt kæk i sine vurderinger. 61% enighed betragtes som godt.
 Det er ofte ikke helt godt nok.
 Så overvej nøje hvad den faktisk bruges til. I et klinisk laboratorium er det 
