@@ -1,13 +1,28 @@
 ---
 title: "Confirmatory Factor Analysis"
-author: "Christian Knudsen"
-date: "2022-10-28"
-output: html_document
+teaching: 0
+exercises: 0
+questions: 
+- "FIXME"
+
+objectives:
+- "FIXME"
+
+keypoints:
+- "FIXME"
+source: Rmd
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r, include = FALSE}
+source("../bin/chunk-options.R")
+knitr_fig_path("04-")
+library(tidyverse)
+library(palmerpenguins)
+library(GGally)
+library(ggExtra)
+library(patchwork)
 ```
+
 
 ## Hvad er Confirmatory Factor Analysis?
 
@@ -48,6 +63,7 @@ library(lavaan)
 library(tidyverse)
 library(psych)
 ```
+
 ## hvordan gør vi?
 
 Et klassisk datasæt til formålet. Holzinger-Swineford. Kognitive tests af 
