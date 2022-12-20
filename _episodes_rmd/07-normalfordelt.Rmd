@@ -126,3 +126,23 @@ Man kan også beregne KL divergensen - det er der en separat note om
 
 ```
 
+
+Histogram og Q-Q plot: Et histogram og en Q-Q plot (quantile-quantile plot) kan give et visuelt overblik over, om dine data er normalfordelte. Et histogram viser fordelingen af dine data i form af en barplot, mens en Q-Q plot viser en sammenligning af kvantiler i dine data med kvantiler i en normal fordeling. Hvis dine data ligner en normal fordeling, vil histogrammet se ud som en klokkeform, og Q-Q plot'en vil være en straight linje.
+
+Kolmogorov-Smirnov test: Denne test sammenligner den empiriske kumulative fordelingsfunktion (ECDF) i dine data med den teoretiske kumulative fordelingsfunktion (CDF) for en normal fordeling. Hvis der er en god overensstemmelse mellem de to, kan det antages, at dine data er normalfordelte. Du kan bruge funktionen ks.test() i R til at lave denne test.
+
+Anderson-Darling test: Denne test er lignende Kolmogorov-Smirnov testen, men den giver en mere præcis vurdering af, om dine data følger en normal fordeling. Du kan bruge funktionen ad.test() i R til at lave denne test.
+
+Shapiro-Wilk test: Denne test sammenligner variancen i dine data med variancen i en normal fordeling. Hvis variancen i dine data er tæt på variancen i en normal fordeling, kan det antages, at dine data er normalfordelte. Du kan bruge funktionen shapiro.test() i R til at lave denne test.
+
+Chi-kvadrat test: Denne test sammenligner antallet af observationer i dine data med antallet af observationer, der forventes i en normal fordeling. Hvis antallet af observationer i dine data er tæt på antallet af observationer, der forventes i en normal fordeling, kan det antages, at dine data er normalfordelte. Du kan bruge funktionen chisq.test() i R til at lave denne test.
+
+Z-score test: Denne test beregner z-scores for hver observation i dine data, og sammenligner dem med z-scores for en normal fordeling. Hvis z-scores i dine data er tæt på z-scores i en normal fordeling, kan det antages, at dine data er normalfordelte. Du kan bruge funktionen scale() i R til at beregne z-scores.
+
+Lilliefors test: Denne test er lignende Z-score testen, men den giver en mere præcis vurdering af, om dine data følger en normal fordeling. Du kan bruge funktionen lillie.test() i R til at lave denne test.
+
+D'Agostino's K^2 test: Denne test sammenligner skewness og kurtosis i dine data med skewness og kurtosis i en normal fordeling. Hvis skewness og kurtosis i dine data er tæt på skewness og kurtosis i en normal fordeling, kan det antages, at dine data er normalfordelte. Du kan bruge funktionen dagostino.test() i R til at lave denne test.
+
+Jarque-Bera test: Denne test er lignende D'Agostino's K^2 testen, men den giver en mere præcis vurdering af, om dine data følger en normal fordeling. Du kan bruge funktionen jarque.bera.test() i R til at lave denne test.
+
+Anderson-Darling A^2 test: Denne test er lignende Anderson-Darling testen, men den giver en mere præcis vurdering af, om dine data følger en normal fordeling. Du kan bruge funktionen a2.test() i R til at lave denne test.
