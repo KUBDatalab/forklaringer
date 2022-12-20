@@ -240,9 +240,21 @@ I R kan KL-divergence beregnes ved hjælp af funktionen kl.divergence() fra pakk
 
 Copy code
 # Load the entropy package
+
+```{r}
 library(entropy)
+```
 
 # Calculate KL-divergence
+
+
+
+??kl.divergence
+
+det er vist så ikke helt entropy...
+Eller - måske er det, der er kl funktioner i den.
+
+
 kl <- kl.divergence(p, q)
 I dette eksempel beregner vi KL-divergence for to probability distributions, p og q. Du kan angive probability distributionsne som vektorer med observationer eller som density functions.
 
