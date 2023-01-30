@@ -1,0 +1,57 @@
+---
+title: "Lineær regression"
+teaching: 0
+exercises: 0
+questions: 
+- "FIXME"
+
+objectives:
+- "FIXME"
+
+keypoints:
+- "FIXME"
+- "Accuracy"
+- "Precision"
+- "Recall"
+- "Sensitivitet"
+- "Specificitet"
+source: Rmd
+math: yes
+---
+
+
+```{r, include = FALSE}
+source("../bin/chunk-options.R")
+knitr_fig_path("11-")
+library(tidyverse)
+library(knitr)
+library(caret)
+library(kableExtra)
+```
+
+
+
+```{r}
+set.seed(3)
+n <- 500
+covariate <- runif(n, -10, 10)
+y <- rnorm(n, 1+2*covariate, 5)
+
+shapiro.test(y)
+m1 <- lm(y ~covariate)
+m_resid <- resid(m1)
+shapiro.test(m_resid)
+```
+```{r}
+library(tidyverse)
+shapiro.test(rnorm(100, mean = 5, sd = 3))
+rnorm(100, mean = 5, sd = 3) %>% hist()
+shapiro.test(runif(100, min = 2, max = 4)) 
+runif(100, min = 2, max = 4)%>% hist()
+```
+
+
+## Skal det være normalfordelt? 
+
+Nej, det forudsættes ikke. Det forudsættes at residualerne er normalfordelte.
+
