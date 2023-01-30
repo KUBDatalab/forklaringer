@@ -10,8 +10,6 @@ knitr::opts_chunk$set(echo = TRUE)
 knitr_fig_path("07-")
 library(tidyverse)
 ```
-
-
 Mange statistiske tests forudsætter at data er normalfordelte. Men hvordan
 finder man egentlig ud af om de er det?
 
@@ -20,13 +18,13 @@ af om de har fået C-vitaminer (VC) eller appelsinsaft (OJ). Og hvor meget de
 har fået.
 
 ```{r}
-ToothGrowth
+head(ToothGrowth)
 ```
 
 
 Er længden normalfordelt?
 
-først, hvad vil det sige at noget er normalfordelt?
+Først, hvad vil det sige at noget er normalfordelt?
 
 ```{r}
 data.frame(x = seq(-12,12,.1)) %>% 
@@ -38,6 +36,7 @@ data.frame(x = seq(-12,12,.1)) %>%
 Dette er en normalfordeling. Den har middelværdien 5, og en standardafvigelse
 på 1. Når vi vil vide hvad sandsynligheden for at se værdien 5, så finder vi 
 5 på x-aksen, og aflæser værdien på y-aksen.
+
 Det her er længden af tænderne på marsvinene. Her har vi optalt hvor mange 
 tænder af en bestemt længde vi har observeret i forskellige intervaller.
 
@@ -87,11 +86,89 @@ Og det er ikke helt skævt.
 
 Kan vi få sat tal på?
 
-Der er flere tests.
+## Hvad er der af tests?
 
-Shapiro-wilk testen tester for normalitet. 0-hypotesen er at data kommer fra en 
-normalfordeling. Den giver en p-værdi der i litteraturen
-siges at være tilstrækkelig hvis den er mindre end 0.1 (i så fald er data ikke normalfordelte).
+Det er fint at kunne plotte hvordan data ser ud. Men rarere at kunne få
+sat tal på. Det er en øvelse som mange har puslet med, og derfor findes der
+også mange tests der kan give os svar på spørgsmålet.
+
+### Shapiro-Wilk
+
+Denne test tester for normalitet på en lidt omvendt måde.
+
+Se evt noter om p-værdier.
+
+0-hypotesen er at data kommer fra en normal fordeling. Hvis p-værdien er tilstrækkelig
+lav, afviser vi 0-hypotesen. Dette er med andre ord et tilfælde hvor vi 
+ønsker at p-værdien skal være så høj som mulig. 
+
+Litteraturen foreskriver at hvis p-værdien er mindre end 0.1, så er data
+ihvertfald ikke normalfordelte.
+
+```{r}
+shapiro.test(ToothGrowth$len)
+```
+
+p-værdien er >0.1, så vi kan ikke afvise 0-hypotesen om at data er normalfordelte.
+
+### Kolmogorov-Smirnov
+
+KS-testen fortæller os om vores data kommer fra en bestemt sandsynlighedsfordeling.
+
+Det vil sige at den kan teste om vores data kommer fra en vilkårlig fordeling. 
+
+Her er vi interesseret i om vores data kommer fra en normalfordelt population.
+
+Den kan forstås som en test af hvor godt en normalfordeling med middelværdi
+og standardafvigelse svarende til vores data, fitter, eller beskriver, vores data.
+
+0-hypotesen er at data følger fordelingen. Hvis p > 0.05, afviser vi 0-hypotesen,
+og konkluderer at vores data nok ikke er normalfordelte.
+
+Så vi giver ks.test() vores data, ToothGrowth$len, og en normalfordeling med
+middelværdi lig middelværdien for vores data, og standardafvigelse lig 
+standardafvigelsen for vores data
+
+```{r}
+ks.test(ToothGrowth$len, "pnorm", mean(ToothGrowth$len, sqrt(var(ToothGrowth$len))))
+```
+Testen angives i litteraturen til at være ideel når vores datasæt er lille.
+
+### Anderson-Darling test
+
+Denne test svarer ligesom Kolmogorov-Smirnov også på om vores data stammer fra 
+en given sandsynlighedsfordeling. I den implementering der ligger i nortest-biblioteket
+testes der kun for normalitet.
+Her som i Shapiro-Wilk skal man også være opmærksom på at 0-hypotesen er at 
+data kommer fra en normalfordeling. 
+
+```{r}
+library(nortest)
+ad.test(ToothGrowth$len)
+
+```
+Når p>0.05 er vi derfor tilbøjelige til at konkludere at 0-hypotesen ikke kan 
+afvises, og at data derfor er normalfordelte.
+
+Den er i følge litteraturen ikke lige så god som Shapir-Wilk ( Razali, Nornadiah; Wah, Yap Bee (2011). "Power comparisons of Shapiro–Wilk, Kolmogorov–Smirnov, Lilliefors and Anderson–Darling tests". Journal of Statistical Modeling and Analytics. 2 (1): 21–33.)
+
+### Cramer-Von Mises test
+
+0-hypotesen er her at data kommer fra en normal fordeling.
+
+```{r}
+library(goftest)
+cvm.test(ToothGrowth$len, 'pnorm')
+
+```
+p-værdien er meget mindre end 0.05, og vi må derfor afvise 0-hypotesen. Data er
+ikke normalfordelte.
+
+
+
+
+
+
 
 
 skewness giver et indtryk af hvor skæv fordelingen er. den trækker måske for langt
@@ -99,11 +176,6 @@ til højre eller til venstre. En perfekt normalfordeling er ikke skewed.
 
 kurtosis fortæller os om halerne på vores data er for fede eller for tynde
 i forhold til hvad de burde være.
-
-Kolmogorov-smirnov testen kan bruges til flere ting. her tester vi sandsynligheden
-for at vores data er trukket ud af en normalfordeling.
-
-Anderson-Darling tester også for normalitet. 
 
 
 
