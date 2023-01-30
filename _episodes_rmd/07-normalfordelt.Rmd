@@ -88,8 +88,10 @@ Kan vi få sat tal på?
 
 Der er flere tests.
 
-Shapiro-wilk testen tester for normalitet. Den giver en p-værdi der i litteraturen
-siges at være tilstrækkelig hvis den er mindre end 0.1 (i så fald er data normalfordelte).
+Shapiro-wilk testen tester for normalitet. 0-hypotesen er at data kommer fra en 
+normalfordeling. Den giver en p-værdi der i litteraturen
+siges at være tilstrækkelig hvis den er mindre end 0.1 (i så fald er data ikke normalfordelte).
+
 
 skewness giver et indtryk af hvor skæv fordelingen er. den trækker måske for langt
 til højre eller til venstre. En perfekt normalfordeling er ikke skewed.
