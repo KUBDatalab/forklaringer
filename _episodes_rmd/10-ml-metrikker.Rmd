@@ -25,6 +25,7 @@ source("../bin/chunk-options.R")
 knitr_fig_path("10-")
 library(tidyverse)
 library(knitr)
+library(caret)
 library(kableExtra)
 ```
 
@@ -58,6 +59,14 @@ Specificitet: Andelen af negative observationer i data der detekteres.
 
 $\frac{SN}{SN + FP}$
 
+F1-score: Et harmonisk gennemsnit af precision og recall
+
+2 * (precision * recall)/(precision + recall)
+
+## Cave! 
+
+Læs det efterfølgende for blot et lille udsnit af hvad man skal overveje. 
+En høj F1 score betyder ikke at modellen er god.
 
 ## Noget længere
 
@@ -140,9 +149,31 @@ relativt få positive tilfælde i datasættet. Hvis vores algoritme konsekvent
 siger at der ikke er en kat på billedet, uanset om der er en eller ej, vil
 den stadig have en accuracy på 94%
 
+Er der en lettere måde at få de tal? Hvis vi har to faktorer med de "sande" værdier,
+og de forudsagte, kan vi med funktionen `confusionMatrix` få hele møllen, og en del mere 
+ud. Brug `mode = "everything"` for at få alle metrikker:
+
+```{r}
+actual <- factor(rep(c(1,0), times=c(50,950)))
+predicted <- factor(c(rep(1,5),rep(0,45),rep(1,10),rep(0,940)))
+
+
+confusionMatrix(predicted, actual, mode = "everything", positive="1")
+```
+
 
 ## Hvad hvis der er mere end to klasser?
 
-Mere end to klasser
+Det er samme koncept. Men bortset fra accuracy, får vi metrikkene for 
+hver klasse. Her har vi tre muligheder for hvad vi ser, C, F og H, og 
+algoriment forsøger at forudsige hvilken af de tre en given observation skal 
+klassificeres som:
+```{r}
+# True values
+y_true <- factor(c("C","C","C","C","C","C", "F","F","F","F","F","F","F","F","F","F", "H","H","H","H","H","H","H","H","H"))
+# Predicted values
+y_pred <- factor(c("C","C","C","C","H","F", "C","C","C","C","C","C","H","H","F","F", "C","C","C","H","H","H","H","H","H"))
 
-https://towardsdatascience.com/multi-class-metrics-made-simple-part-ii-the-f1-score-ebe8b2c2ca1
+confusionMatrix(y_pred, y_true, mode="everything")
+```
+
