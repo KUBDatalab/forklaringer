@@ -6,6 +6,7 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
+source("../bin/chunk-options.R")
 knitr::opts_chunk$set(echo = TRUE)
 knitr_fig_path("07-")
 library(tidyverse)
