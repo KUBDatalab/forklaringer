@@ -24,3 +24,51 @@ der skal en bedre overskrift til - på dansk.
 Iterative Bayesian optimization of a classification model
 
 https://www.tidymodels.org/learn/work/bayes-opt/
+
+
+
+Bayes klassifikation er en teknik til at klassificere observationer i forskellige kategorier baseret på en kombination af probabilistiske modeller og Bayes' teorem. Dette er en populær metode inden for maskinlæring og dataanalyse, da den er relativt nem at implementere og kan give gode resultater i mange forskellige situationer.
+
+I R findes der et væld af værktøjer til at implementere Bayes klassifikation. Et af de mest populære er pakken e1071, som indeholder en række funktioner til at implementere forskellige typer af Bayes klassifikation, såsom Naive Bayes og Complementary Naive Bayes. Derudover indeholder pakken også funktioner til at evaluere og visualisere resultaterne af en Bayes klassifikation.
+
+For at implementere Bayes klassifikation i R, skal du først og fremmest indlæse pakken e1071 ved at skrive følgende kommando:
+
+
+library(e1071)
+Herefter kan du bruge funktionen naiveBayes() til at træne en Naive Bayes klassifikator på dit træningsdata. Funktionen tager to argumenter: den første er dit træningsdata, mens den anden er den kolonne i dit data, der indeholder den variable, du ønsker at klassificere.
+
+Eksempelvis kan du træne en Naive Bayes klassifikator på følgende måde:
+
+Copy code
+# Indlæs pakken
+library(e1071)
+
+# Indlæs dit træningsdata
+data <- read.csv("training_data.csv")
+
+# Træn en Naive Bayes klassifikator
+model <- naiveBayes(data[, -1], data$class)
+I dette eksempel træner vi en Naive Bayes klassifikator
+
+
+Naive Bayes og Complementary Naive Bayes (CNB) er begge typer af Bayes klassifikation, der anvender probabilistiske modeller og Bayes' teorem til at klassificere observationer i forskellige kategorier. Der er dog nogle væsentlige forskelle og ligheder mellem de to metoder:
+
+Ligheder
+Begge metoder anvender probabilistiske modeller og Bayes' teorem: Som nævnt ovenfor anvender både Naive Bayes og CNB probabilistiske modeller og Bayes' teorem til at klassificere observationer. Dette betyder, at de begge anvender en form for matematisk formel til at beregne sandsynligheden for, at en given observation tilhører en bestemt kategori.
+Begge metoder er effektive til at håndtere store mængder data: Naive Bayes og CNB er begge effektive til at håndtere store mængder data, da de er relativt simple og nemme at implementere. Dette gør dem velegnede til brug i mange forskellige datascenarier, såsom store datasæt med mange features og kategorier.
+Forskelle
+Naive Bayes antager independence: En af de største forskelle mellem Naive Bayes og CNB er, at Naive Bayes antager independence mellem features. Dette betyder, at Naive Bayes antager, at værdierne af de forskellige features er uafhængige af hinanden. Dette kan være en fordel i visse situationer, da det kan gøre modellen nemmere at implementere og forstå. Det kan dog også være en ulempe, da dette antagelse ofte ikke holder stik i virkeligheden, hvilket kan resultere i dårligere performance.
+CNB tager højde for interaktioner mellem features: CNB tager imod antagelsen om independence mellem features, og tager i stedet højde for interaktioner mellem features. Dette gør CNB mere robust og fleksibel end Naive Bayes, da den er i stand til at håndtere komplekse sammenhænge mellem features. Dette kan resultere i bedre performance i visse situationer.
+I korte træk er Naive Bayes en enkel og effektiv metode til Bayes klassifikation, mens CNB er en mere avanceret metode, der tager højde for interaktioner mellem features. Valg af den mest hensigtsmæssige metode afhænger af den specifikke datamængde og problemstilling, du står overfor.
+
+Bayes' teorem er en matematisk formel, der bruges til at beregne sandsynligheden for en given begivenhed baseret på kendskab til andre begivenheder. Formlen er opkaldt efter den engelske matematiker Thomas Bayes, der formulerede den i det 18. århundrede.
+
+Bayes' teorem udtrykkes som følgende:
+
+$$ P(A|B) = \frac{P(B|A) \cdot P(A)}{P(B)} $$
+
+Her er $P(A|B)$ sandsynligheden for at begivenheden $A$ sker, given at begivenheden $B$ sker. $P(B|A)$ er sandsynligheden for at begivenheden $B$ sker, given at begivenheden $A$ sker. $P(A)$ er sandsynligheden for at begivenheden $A$ sker, og $P(B)$ er sandsynligheden for at begivenheden $B$ sker.
+
+Bayes' teorem bruges ofte i maskinlæring og dataanalyse til at beregne sandsynligheden for en given begivenhed baseret på en række andre begivenheder. Dette kan f.eks. være at beregne sandsynligheden for, at en patient har en given sygdom, given en række symptomer og testresultater.
+
+I korte træk er Bayes' teorem en matematisk formel, der hjælper os med at beregne sandsynligheden for en given begivenhed baseret på kendskab til andre begivenheder. Dette kan være en nyttig metode i mange forskellige sammenhænge, såsom maskinlæring og dataanalyse.

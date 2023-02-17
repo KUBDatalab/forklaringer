@@ -61,7 +61,7 @@ library(lavaan)
 
 
 ~~~
-This is lavaan 0.6-12
+This is lavaan 0.6-14
 lavaan is FREE software! Please report any bugs.
 ~~~
 {: .output}
@@ -182,7 +182,7 @@ fit
 
 
 ~~~
-lavaan 0.6-12 ended normally after 35 iterations
+lavaan 0.6.14 ended normally after 35 iterations
 
   Estimator                                         ML
   Optimization method                           NLMINB
@@ -210,7 +210,7 @@ summary(fit, standardized=TRUE, fit.measures=TRUE, rsquare=TRUE)
 
 
 ~~~
-lavaan 0.6-12 ended normally after 35 iterations
+lavaan 0.6.14 ended normally after 35 iterations
 
   Estimator                                         ML
   Optimization method                           NLMINB
@@ -242,14 +242,15 @@ Loglikelihood and Information Criteria:
                                                       
   Akaike (AIC)                                7517.490
   Bayesian (BIC)                              7595.339
-  Sample-size adjusted Bayesian (BIC)         7528.739
+  Sample-size adjusted Bayesian (SABIC)       7528.739
 
 Root Mean Square Error of Approximation:
 
   RMSEA                                          0.092
   90 Percent confidence interval - lower         0.071
   90 Percent confidence interval - upper         0.114
-  P-value RMSEA <= 0.05                          0.001
+  P-value H_0: RMSEA <= 0.050                    0.001
+  P-value H_0: RMSEA >= 0.080                    0.840
 
 Standardized Root Mean Square Residual:
 
@@ -324,7 +325,7 @@ fitted(fit)
 
 ~~~
 $cov
-   x1    x2    x3    x4    x5    x6    x7    x8    x9   
+      x1    x2    x3    x4    x5    x6    x7    x8    x9
 x1 1.358                                                
 x2 0.448 1.382                                          
 x3 0.590 0.327 1.275                                    
@@ -374,7 +375,7 @@ $type
 [1] "normalized"
 
 $cov
-   x1     x2     x3     x4     x5     x6     x7     x8     x9    
+       x1     x2     x3     x4     x5     x6     x7     x8     x9
 x1  0.000                                                        
 x2 -0.493  0.000                                                 
 x3 -0.125  1.539  0.000                                          

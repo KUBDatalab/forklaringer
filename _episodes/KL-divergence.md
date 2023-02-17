@@ -287,4 +287,31 @@ Jo tættere værdien er på 0, jo bedre matcher fordelingen "sandheden". Og selv
 vi tidligere blev fristet til at mene at binomial-fordelingen så mere rigtig ud,
 så er den uniforme fordeling faktisk bedre.
 
+## Noter der bør indarbejdes
+KL-divergence, også kendt som Kullback-Leibler divergence eller relative entropy, er en måling af, hvor forskellige to probability distributions er. KL-divergence bruges ofte i maskinlæring og dataanalyse til at sammenligne to modeller eller til at måle præcisionen af en model.
+
+I R kan KL-divergence beregnes ved hjælp af funktionen kl.divergence() fra pakken entropy. Her er et eksempel på, hvordan du kan bruge denne funktion:
+
+Copy code
+# Load the entropy package
+
+
+```r
+library(entropy)
+```
+
+# Calculate KL-divergence
+
+
+
+??kl.divergence
+
+det er vist så ikke helt entropy...
+Eller - måske er det, der er kl funktioner i den.
+
+
+kl <- kl.divergence(p, q)
+I dette eksempel beregner vi KL-divergence for to probability distributions, p og q. Du kan angive probability distributionsne som vektorer med observationer eller som density functions.
+
+Det er vigtigt at huske, at KL-divergence kun er en måling af forskellen mellem to probability distributions, og den siger intet om, hvor god en model er i forhold til at forudsige fremtidige observationer. Derfor bør KL-divergence kun bruges som et supplement til andre metoder til at vurdere modelpræcision.
 
