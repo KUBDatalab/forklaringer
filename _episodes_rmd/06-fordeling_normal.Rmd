@@ -3,18 +3,16 @@ title: "Normalfordelingen"
 teaching: 0
 exercises: 0
 questions: 
-- "FIXME"
-
+- "Hvad pokker er den der normalfordeling egentlig?"
 objectives:
-- "FIXME"
-
+- "Forstå normalfordelingen nok til at kunne hjælpe studerende"
 keypoints:
 - "FIXME"
 source: Rmd
 math: yes
 ---
 
-```{r, include = FALSE}
+```{r SETUP, include = FALSE}
 source("../bin/chunk-options.R")
 knitr_fig_path("06-")
 library(tidyverse)
@@ -125,4 +123,4 @@ Ingen levende bævere har disse legemstemperaturer. Så vi har sådan set ingen
 grund til for alvor at tro at bæveres temperatur faktisk er normalfordelt.
 
 En del andre tests for normalfordelt data eksisterer. Og en del tests kan bruges
-til formålet, selvom de egentlig ikke er bygget til det.
+til formålet, selvom de egentlig ikke er bygget til det. Det kigger vi på et andet sted her på siden.
