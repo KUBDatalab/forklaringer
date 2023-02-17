@@ -3,10 +3,9 @@ title: "Bayes klassifikation"
 teaching: 42
 exercises: 47
 questions: 
-- "FIXME"
-
+- "Hvad er Bayes i relation til klassifikation"
 objectives:
-- "FIXME"
+- "Forstå det her nok til at vi kan hjælpe studerende"
 
 keypoints:
 - "FIXME"
@@ -41,7 +40,7 @@ Herefter kan du bruge funktionen naiveBayes() til at træne en Naive Bayes klass
 
 Eksempelvis kan du træne en Naive Bayes klassifikator på følgende måde:
 
-Copy code
+
 # Indlæs pakken
 library(e1071)
 
