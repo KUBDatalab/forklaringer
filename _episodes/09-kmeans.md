@@ -5,11 +5,9 @@ title: "Kmeans"
 teaching: 0
 exercises: 0
 questions: 
-- "FIXME"
-
+- "Hvad er k-means?"
 objectives:
 - "FIXME"
-
 keypoints:
 - "FIXME"
 source: Rmd
@@ -18,8 +16,102 @@ math: yes
 
 
 
+## TL;DR
 
-vil kmeans altid give samme resultat?
+k-means er en maskinlæringsalgoritme, der klassificerer data i k-klasser.
+
+Den er baseret på numeriske værdier, det kunne se således ud:
+
+
+~~~
+test_data <- rbind(
+  data.frame(x = rnorm(5, 0,1), y = rnorm(5,0,1)),
+  data.frame(x = rnorm(5, 3,1), y = rnorm(5,3,1)))
+test_data
+~~~
+{: .language-r}
+
+
+
+~~~
+            x          y
+1  -0.9728055  0.0412868
+2  -1.5861893 -0.4801421
+3  -1.2094981 -1.6970421
+4  -1.4237023  1.8749677
+5  -1.2005202  1.4043101
+6   2.6588164  4.2765519
+7   2.3487561  2.4474644
+8   3.7796321  3.5593306
+9   2.0462614  4.0113397
+10  2.9335468  3.1790631
+~~~
+{: .output}
+Plotter vi dem er det tydeligt at der er struktur i data:
+
+~~~
+ggplot(test_data, aes(x,y)) +
+  geom_point()
+~~~
+{: .language-r}
+
+<img src="../fig/rmd-09-unnamed-chunk-2-1.png" alt="plot of chunk unnamed-chunk-2" width="612" style="display: block; margin: auto;" />
+Kan vi få computeren til at identificere den struktur?
+
+Ja:
+
+~~~
+kmeans(test_data, 2)
+~~~
+{: .language-r}
+
+
+
+~~~
+K-means clustering with 2 clusters of sizes 5, 5
+
+Cluster means:
+          x         y
+1  2.753403 3.4947499
+2 -1.278543 0.2286761
+
+Clustering vector:
+ [1] 2 2 2 2 2 1 1 1 1 1
+
+Within cluster sum of squares by cluster:
+[1] 3.837048 8.558368
+ (between_SS / total_SS =  84.4 %)
+
+Available components:
+
+[1] "cluster"      "centers"      "totss"        "withinss"     "tot.withinss"
+[6] "betweenss"    "size"         "iter"         "ifault"      
+~~~
+{: .output}
+## Hvad sker der?
+
+k-means er en unsupervised maskinlæringsmodel. Den finder med andre
+ord struktur i vores data, uden at vi skal træne den på noget kendt struktur.
+
+Algoritmen laver k tilfældige punkter i vores data. Dem kalder vi for
+centroider. De har samme dimensioner som vores data, der altså her er 2, x og y. Men der er ikke nogen øvre grænse for hvor mange dimensioner data kan have.
+
+Nu beregner algoritmen hvilken af centroiderne observationerne i data ligger tættest på. 
+
+Når den har gjort det, tildeler den hvert af punkterne en "klasse", der matcher en centroide. Her har vi valgt at der skal være to klasser, hvert datapunkt får derfor enten klassen 1 eller 2.
+
+Dernæst samler algoritmen alle punkterne i klasse 1, og beregner en ny centroide, som gennemsnittet af punkterne i klasse 1. Den gør det samme med klasse 2. Er der flere gør den det med alle klasser.
+
+Algoritmen har nu opdaterede centroider. Den beregner så hvilken af de nye centroider observationerne i data ligger tættest på, og opdaterer
+tildelingen af klasser til punkter. 
+
+Nu kan der beregnes nye centroider igen. Processen fortsætter indtil algoritmen enten har gjort det så mange gange som vi måtte have specificeret (default 1000 gange), eller inddtil der ikke er data der "hopper" fra en klasse til en anden længere. 
+
+Nu er algoritmen færdig, og den har klassificeret data i k klasser.
+
+
+## vil kmeans altid give samme resultat?
+
 Nej.
 
 Her er 1000 helt tilfældige pupnkter:
@@ -30,14 +122,12 @@ test_data <- data.frame(x = rnorm(1000), y = rnorm(1000))
 ~~~
 {: .language-r}
 
-Der er ingenstruktur i de data. Eller, hvis der er, er der noget galt med
-tilfældighedsgeneratoren.
+Der er ingen struktur i de data. Eller, hvis der er, er der noget galt med tilfældighedsgeneratoren.
 
-Men kmeans kan finde det antal clustre vi beder den om, uanset om der er struktur
-eller ej.
+Men kmeans kan finde det antal clustre vi beder den om, uanset om der er struktur eller ej.
 
 Lad os finde 5 clustre. Vi starter med at låse tilfældighedsgeneratoren, 
-så vi får samme resultat når vi gør det samme i morgen
+så vi får samme resultat når vi gør det samme i morgen. `augment` funktionen tager vores data, og tildeler det klasser baseret på kmeans resultatet:
 
 ~~~
 set.seed(42)
@@ -54,7 +144,7 @@ cluster2 <- augment(kmeans_model2, test_data)
 ~~~
 {: .language-r}
 
-Hvis kmeans gav samme resultat hver gang, ville 
+Hvis kmeans gav samme resultat hver gang, ville cluster1 og cluster2 være ens.
 
 
 ~~~
@@ -65,13 +155,12 @@ sum(cluster2$.cluster != cluster1$.cluster)
 
 
 ~~~
-[1] 610
+[1] 939
 ~~~
 {: .output}
-være lig 0. Det er det ikke.
+Hvis de var det, ville ovenstående resultat være 0. Det er det ikke.
 
-Lad os prøve at plotte:
-
+Vi kan også visualisere at data klassificeres forskelligt:
 
 ~~~
 første <- ggplot(cluster1, aes(x,y, color = .cluster)) +
@@ -84,6 +173,30 @@ første + anden
 ~~~
 {: .language-r}
 
-<img src="../fig/rmd-09-unnamed-chunk-6-1.png" alt="plot of chunk unnamed-chunk-6" width="612" style="display: block; margin: auto;" />
+<img src="../fig/rmd-09-unnamed-chunk-8-1.png" alt="plot of chunk unnamed-chunk-8" width="612" style="display: block; margin: auto;" />
 
+k-means algoritmen er følsom overfor de tilfældige centroider der vælges i starten af den. Den bør dog, hvis der faktisk er struktur i data, 
+give ca. samme resultat.
+
+Der er data med tydelig struktur, hvor kmeans ikke kan finde den:
+
+<img src="../fig/rmd-09-sfærisk_data-1.png" alt="plot of chunk sfærisk_data" width="612" style="display: block; margin: auto;" />
+Her er der tydelig struktur. En klasse ligger inde omkring 0,0, en anden klasse ligger rundt om, med pæn afstand til den første klasse.
+
+Når vi træner en k-means model på det data, får vi ikke helt det vi forventer:
+
+~~~
+kmeans_model3 <- kmeans(test_data[,-3], 2)
+cluster3 <- augment(kmeans_model3, test_data[,-3])
+~~~
+{: .language-r}
+
+
+~~~
+ggplot(cluster3, aes(x,y,color=.cluster)) +
+  geom_point()
+~~~
+{: .language-r}
+
+<img src="../fig/rmd-09-unnamed-chunk-10-1.png" alt="plot of chunk unnamed-chunk-10" width="612" style="display: block; margin: auto;" />
 

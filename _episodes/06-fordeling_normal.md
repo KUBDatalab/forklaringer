@@ -5,11 +5,9 @@ title: "Normalfordelingen"
 teaching: 0
 exercises: 0
 questions: 
-- "FIXME"
-
+- "Hvad pokker er den der normalfordeling egentlig?"
 objectives:
-- "FIXME"
-
+- "Forstå normalfordelingen nok til at kunne hjælpe studerende"
 keypoints:
 - "FIXME"
 source: Rmd
@@ -39,7 +37,7 @@ beaver1 %>% ggplot(aes(x=temp)) +
 ~~~
 {: .language-r}
 
-<img src="../fig/rmd-06-unnamed-chunk-2-1.png" alt="plot of chunk unnamed-chunk-2" width="612" style="display: block; margin: auto;" />
+<img src="../fig/rmd-06-unnamed-chunk-1-1.png" alt="plot of chunk unnamed-chunk-1" width="612" style="display: block; margin: auto;" />
 
 Det ligner lidt den klokkekurve, som de fleste har set på et tidspunkt:
 
@@ -80,7 +78,7 @@ data.frame(x = seq(35, 39,.01)) %>%
 ~~~
 {: .language-r}
 
-<img src="../fig/rmd-06-unnamed-chunk-3-1.png" alt="plot of chunk unnamed-chunk-3" width="612" style="display: block; margin: auto;" />
+<img src="../fig/rmd-06-unnamed-chunk-2-1.png" alt="plot of chunk unnamed-chunk-2" width="612" style="display: block; margin: auto;" />
 Det er også en normalfordeling, den har gennemsnit på 36.86, og en standardafvigelse
 på 0.193.
 
@@ -125,7 +123,7 @@ qqline(beaver1$temp)
 ~~~
 {: .language-r}
 
-<img src="../fig/rmd-06-unnamed-chunk-4-1.png" alt="plot of chunk unnamed-chunk-4" width="612" style="display: block; margin: auto;" />
+<img src="../fig/rmd-06-unnamed-chunk-3-1.png" alt="plot of chunk unnamed-chunk-3" width="612" style="display: block; margin: auto;" />
 
 Her får vi plottet, den rette linie, den fordeling vi burde se hvis data var
 normalfordelte. Og, cirklerne, den fordeling vi ser i vores data.
@@ -139,4 +137,4 @@ Ingen levende bævere har disse legemstemperaturer. Så vi har sådan set ingen
 grund til for alvor at tro at bæveres temperatur faktisk er normalfordelt.
 
 En del andre tests for normalfordelt data eksisterer. Og en del tests kan bruges
-til formålet, selvom de egentlig ikke er bygget til det.
+til formålet, selvom de egentlig ikke er bygget til det. Det kigger vi på et andet sted her på siden.

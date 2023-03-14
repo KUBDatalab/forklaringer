@@ -5,10 +5,9 @@ title: "Bayes klassifikation"
 teaching: 42
 exercises: 47
 questions: 
-- "FIXME"
-
+- "Hvad er Bayes i relation til klassifikation"
 objectives:
-- "FIXME"
+- "Forstå det her nok til at vi kan hjælpe studerende"
 
 keypoints:
 - "FIXME"
@@ -17,58 +16,306 @@ source: Rmd
 
 
 
+### Hvad er det?
 
-der skal en bedre overskrift til - på dansk.
+Klassifikation baseret på Bayes teorem. 
+
+Det kan nok bære en hel side for sig. Men. 
+
+Bayes teorem fortæller os hvordan vi opdaterer vores overbevisning om 
+noget - baseret på ny viden.
+
+Der er noget nomenklatur vi nok skal have styr på:
+
+P(B) er sandsynligheden for at hændelsen B sker.
+P(A|B) er sandsynligheden for at hændelsen A sker, *givet* at hændelsen B sker.
+P(A, B) er sandsynligheden for at hændelserne A *og* B sker.
+
+Der er også nogle regneregler det kan være værd at have styr på:
+
+$P(A, B) = P(A|B)P(B)$
+
+$P(A, B) = P(B, A)$
+
+$P(A|B) = \frac{P(A, B)}{P(B)}$
+
+$P(A|B) \neq P(B|A)$
+
+De regneregler kan vi bruge. Kender vi P(A|B), P(A) og P(B), kan 
+vi finde ud af at:
+
+$P(B|A) = \frac{P(A|B)P(B)}{P(A)}$
+
+Vi kan også finde ud af at:
+
+$P(!A) = 1 - P(A)$
+
+Hvor P(!A) er sandsynligheden for at A ikke sker.
+
+Og at 
+
+$P(B|!A) = 1 - P(!B|!A)$
+
+Altså at sandsynligheden for at B sker, hvis A *ikke* sker, er 1 minus
+sandsynligheden for at B ikke sker, når A heller ikke sker.
+
+Og endelig kan vi beregne P(B), hvis vi kender P(B|A) og P(A):
+
+$P(B) = P(B|A)*P(A) + P(B|!A)*P(!A)$
 
 
-Iterative Bayesian optimization of a classification model
+Nu kan vi forstå hvad Bayes teorem egentlig siger:
 
-https://www.tidymodels.org/learn/work/bayes-opt/
+$P(A|B) = \frac{P(B|A)P(A)}{P(B)}$
+
+Og hvad bruger vi så det til? Jo. Før B sker, har vi et bud på hvad sandsynligheden er for at A sker. 
+
+Når B er sket, har vi en opdateret sandsynlighed. Vi forventer at sandsynligheden for at toget er forsinket til at være 20% (P(A) = 0.2). 
+Nu falder der blade på skinnerne. Hvad er nu vores bud på hvor forsinket toget er?
+
+P(A) er vores *prior*, det vi mener *før* B sker. P(A|B) er vores *posterior*, det vi mener om A, *efter* B er sket.
+
+Der går sjældent røg af en brand, uden at der er ild i den.
+
+Hvad er sandsynligheden for at der er brand, hvis der er røg?
+
+Vi mener at sandsynligheden for at der er ild er 2% (P(A)). 
+Sandsynligheden for at der er røg i det hele taget er 5% (P(B)). Og sandsynligheden for at der er røg, hvis der er ild er 80% (P(B|A)).
+
+Hvis vi observerer røg, opdaterer vi vores bud på hvad sandsynligheden er for at der er ild:
+
+$P(ild|røg) = \frac{P(røg|ild)P(ild)}{P(røg)} = \frac{0.8*0.02}{0.05} = 0.32  = 32\%$
+
+Før vi observerede røg, mente vi sandsynligheden for at der var ild var 2%. Nu ser vi røg. Så nu opdaterer vi vores bud på sandsynligheden for ild til at være 32%
+
+### Hvor er det ellers nyttigt?
+
+Folk har en tilbøjelighed til at vurdere sandsynligheder forkert. Sandsynligheden for at jeg har COVID-19, er 1%. Jeg bliver testet med en test der er 95% sikker (som i - hvis den er positiv, er der 95% sandsynlighed for at jeg har COVID-19).
+
+Så når jeg får stukket vatpinden i næsen, er gættet på om jeg har COVID-19 1%. Når resultatet kommer positivt tilbage, hvad er så bedste gæt på om jeg har COVID-19?
+
+Min posterior, sandsynligheden for at jeg har COVID, P(A) = 0.01. 
+Sandsynligheden for en positiv test, *hvis* jeg *har* COVID: P(B|A) 0.95
+P(B|A), altså sandsynligheden for at jeg får en positiv test, givet at jeg *har* COVID-19, er 0.95.
+
+Det vil være:
+
+$P(A|B) = \frac{P(B|A)P(A)}{P(B)} = \frac{0.95 * 0.01}{P(B)}$
+
+Vi kender ikke P(B), sandsynligheden for at testen er negativ. Uanset om jeg har COVID eller ej. Men vi kan bruge regnereglerne ovenfor til at beregne det:
+
+$P(B) = P(B|A)*P(A) + P(B|!A)*P(!A)$
+
+Eller:
+
+$P(B) = 0.95*0.01 + P(B|!A)*P(!A)$
+
+Vi ved at:
+
+$P(!A) = 1 - P(A) = 1- 0.01 = 0.99$
+
+Det sætter vi ind, og får:
+
+$P(B) = 0.95*0.01 + P(B|!A)*0.99$
+
+P(B|!A) kender vi ikke. Det er de falsk positive. Der hvor testen er positiv, selvom patienten er negativ. Lad os sætte den til 5%
+
+Lad os sætte det ind:
+
+$P(B) = 0.95*0.01 + 0.05*0.99 = 0.059$
+
+Det sætter vi også ind i vores oprindelige formel:
+
+$P(A|B) = \frac{P(B|A)P(A)}{P(B)} = \frac{0.95 * 0.01}{P(B)} = \frac{0.95 * 0.01}{0.059} = 0.161 = 16%$
+
+Efter den positive test, opdaterer jeg derfor min vurdering af om jeg har COVID fra 1% til 16%. 
+
+
+Hvordan klassificerer vi så med Bayes?
+
+Naiv bayes antager at de prediktive variable er uafhængige af hinanden.
+
+Der er mange implementeringer af Naiv Bayes. En af dem finder vi i pakken e1071.
+
+Lad os kigge på pingviner. 
+
+
+~~~
+library(palmerpenguins)
+library(tidymodels)
+~~~
+{: .language-r}
 
 
 
-Bayes klassifikation er en teknik til at klassificere observationer i forskellige kategorier baseret på en kombination af probabilistiske modeller og Bayes' teorem. Dette er en populær metode inden for maskinlæring og dataanalyse, da den er relativt nem at implementere og kan give gode resultater i mange forskellige situationer.
+~~~
+── Attaching packages ────────────────────────────────────── tidymodels 1.0.0 ──
+~~~
+{: .output}
 
-I R findes der et væld af værktøjer til at implementere Bayes klassifikation. Et af de mest populære er pakken e1071, som indeholder en række funktioner til at implementere forskellige typer af Bayes klassifikation, såsom Naive Bayes og Complementary Naive Bayes. Derudover indeholder pakken også funktioner til at evaluere og visualisere resultaterne af en Bayes klassifikation.
-
-For at implementere Bayes klassifikation i R, skal du først og fremmest indlæse pakken e1071 ved at skrive følgende kommando:
 
 
+~~~
+✔ broom        1.0.4     ✔ recipes      1.0.5
+✔ dials        1.1.0     ✔ rsample      1.1.1
+✔ dplyr        1.1.0     ✔ tibble       3.2.0
+✔ ggplot2      3.4.1     ✔ tidyr        1.3.0
+✔ infer        1.0.4     ✔ tune         1.0.1
+✔ modeldata    1.1.0     ✔ workflows    1.1.3
+✔ parsnip      1.0.4     ✔ workflowsets 1.0.0
+✔ purrr        1.0.1     ✔ yardstick    1.1.0
+~~~
+{: .output}
+
+
+
+~~~
+── Conflicts ───────────────────────────────────────── tidymodels_conflicts() ──
+✖ purrr::discard() masks scales::discard()
+✖ dplyr::filter()  masks stats::filter()
+✖ dplyr::lag()     masks stats::lag()
+✖ recipes::step()  masks stats::step()
+• Use tidymodels_prefer() to resolve common conflicts.
+~~~
+{: .output}
+
+
+
+~~~
+library(caret)
+~~~
+{: .language-r}
+
+
+
+~~~
+Loading required package: lattice
+~~~
+{: .output}
+
+
+
+~~~
+
+Attaching package: 'caret'
+~~~
+{: .output}
+
+
+
+~~~
+The following objects are masked from 'package:yardstick':
+
+    precision, recall, sensitivity, specificity
+~~~
+{: .output}
+
+
+
+~~~
+The following object is masked from 'package:purrr':
+
+    lift
+~~~
+{: .output}
+
+
+
+~~~
 library(e1071)
-Herefter kan du bruge funktionen naiveBayes() til at træne en Naive Bayes klassifikator på dit træningsdata. Funktionen tager to argumenter: den første er dit træningsdata, mens den anden er den kolonne i dit data, der indeholder den variable, du ønsker at klassificere.
-
-Eksempelvis kan du træne en Naive Bayes klassifikator på følgende måde:
-
-Copy code
-# Indlæs pakken
-library(e1071)
-
-# Indlæs dit træningsdata
-data <- read.csv("training_data.csv")
-
-# Træn en Naive Bayes klassifikator
-model <- naiveBayes(data[, -1], data$class)
-I dette eksempel træner vi en Naive Bayes klassifikator
+~~~
+{: .language-r}
 
 
-Naive Bayes og Complementary Naive Bayes (CNB) er begge typer af Bayes klassifikation, der anvender probabilistiske modeller og Bayes' teorem til at klassificere observationer i forskellige kategorier. Der er dog nogle væsentlige forskelle og ligheder mellem de to metoder:
 
-Ligheder
-Begge metoder anvender probabilistiske modeller og Bayes' teorem: Som nævnt ovenfor anvender både Naive Bayes og CNB probabilistiske modeller og Bayes' teorem til at klassificere observationer. Dette betyder, at de begge anvender en form for matematisk formel til at beregne sandsynligheden for, at en given observation tilhører en bestemt kategori.
-Begge metoder er effektive til at håndtere store mængder data: Naive Bayes og CNB er begge effektive til at håndtere store mængder data, da de er relativt simple og nemme at implementere. Dette gør dem velegnede til brug i mange forskellige datascenarier, såsom store datasæt med mange features og kategorier.
-Forskelle
-Naive Bayes antager independence: En af de største forskelle mellem Naive Bayes og CNB er, at Naive Bayes antager independence mellem features. Dette betyder, at Naive Bayes antager, at værdierne af de forskellige features er uafhængige af hinanden. Dette kan være en fordel i visse situationer, da det kan gøre modellen nemmere at implementere og forstå. Det kan dog også være en ulempe, da dette antagelse ofte ikke holder stik i virkeligheden, hvilket kan resultere i dårligere performance.
-CNB tager højde for interaktioner mellem features: CNB tager imod antagelsen om independence mellem features, og tager i stedet højde for interaktioner mellem features. Dette gør CNB mere robust og fleksibel end Naive Bayes, da den er i stand til at håndtere komplekse sammenhænge mellem features. Dette kan resultere i bedre performance i visse situationer.
-I korte træk er Naive Bayes en enkel og effektiv metode til Bayes klassifikation, mens CNB er en mere avanceret metode, der tager højde for interaktioner mellem features. Valg af den mest hensigtsmæssige metode afhænger af den specifikke datamængde og problemstilling, du står overfor.
+~~~
 
-Bayes' teorem er en matematisk formel, der bruges til at beregne sandsynligheden for en given begivenhed baseret på kendskab til andre begivenheder. Formlen er opkaldt efter den engelske matematiker Thomas Bayes, der formulerede den i det 18. århundrede.
+Attaching package: 'e1071'
+~~~
+{: .output}
 
-Bayes' teorem udtrykkes som følgende:
 
-$$ P(A|B) = \frac{P(B|A) \cdot P(A)}{P(B)} $$
 
-Her er $P(A|B)$ sandsynligheden for at begivenheden $A$ sker, given at begivenheden $B$ sker. $P(B|A)$ er sandsynligheden for at begivenheden $B$ sker, given at begivenheden $A$ sker. $P(A)$ er sandsynligheden for at begivenheden $A$ sker, og $P(B)$ er sandsynligheden for at begivenheden $B$ sker.
+~~~
+The following object is masked from 'package:tune':
 
-Bayes' teorem bruges ofte i maskinlæring og dataanalyse til at beregne sandsynligheden for en given begivenhed baseret på en række andre begivenheder. Dette kan f.eks. være at beregne sandsynligheden for, at en patient har en given sygdom, given en række symptomer og testresultater.
+    tune
+~~~
+{: .output}
 
-I korte træk er Bayes' teorem en matematisk formel, der hjælper os med at beregne sandsynligheden for en given begivenhed baseret på kendskab til andre begivenheder. Dette kan være en nyttig metode i mange forskellige sammenhænge, såsom maskinlæring og dataanalyse.
+
+
+~~~
+The following object is masked from 'package:rsample':
+
+    permutations
+~~~
+{: .output}
+
+
+
+~~~
+The following object is masked from 'package:parsnip':
+
+    tune
+~~~
+{: .output}
+
+
+
+~~~
+penguin_sample <- sample(c(TRUE, FALSE), nrow(penguins), replace=TRUE, prob=c(0.8,0.2))
+penguin_train  <- penguins[penguin_sample, ]
+penguin_test   <- penguins[!penguin_sample, ]
+
+penguin_model <- naiveBayes(species~., penguin_train)
+
+penguin_predictions <- predict(penguin_model, newdata = penguin_test) 
+
+confusionMatrix(penguin_predictions, penguin_test$species)
+~~~
+{: .language-r}
+
+
+
+~~~
+Confusion Matrix and Statistics
+
+           Reference
+Prediction  Adelie Chinstrap Gentoo
+  Adelie        31         0      0
+  Chinstrap      0        12      0
+  Gentoo         0         0     24
+
+Overall Statistics
+                                     
+               Accuracy : 1          
+                 95% CI : (0.9464, 1)
+    No Information Rate : 0.4627     
+    P-Value [Acc > NIR] : < 2.2e-16  
+                                     
+                  Kappa : 1          
+                                     
+ Mcnemar's Test P-Value : NA         
+
+Statistics by Class:
+
+                     Class: Adelie Class: Chinstrap Class: Gentoo
+Sensitivity                 1.0000           1.0000        1.0000
+Specificity                 1.0000           1.0000        1.0000
+Pos Pred Value              1.0000           1.0000        1.0000
+Neg Pred Value              1.0000           1.0000        1.0000
+Prevalence                  0.4627           0.1791        0.3582
+Detection Rate              0.4627           0.1791        0.3582
+Detection Prevalence        0.4627           0.1791        0.3582
+Balanced Accuracy           1.0000           1.0000        1.0000
+~~~
+{: .output}
+
+### Hvornår bruger man Naiv Bayes i stedet for andre klassifikationer?
+
+Lærebøgerne fortæller at Bayes har en fordel ved at håndtere både kontinuert og diskret data i et hug. Men er bedst til kategoriske data.  At den skalerer ret godt til større datasæt. Og klarer sig ret godt med mindre træningsdata end andre metoder. 
+
+Forudsætningen er dog at de features der fittes på er uafhængige af hinanden.
+
+

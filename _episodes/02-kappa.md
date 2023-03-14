@@ -19,22 +19,20 @@ math: yes
 
 
 
-
-
 ## TL;DR
 
 Bruges til at måle om kategorisering af ting sker pålideligt.
 
 To "raters" rater noget. Det kan være en vurdering af farve eller andet 
-godt kategorisk, kvalitativt, materiale.
+kategorisk, som regel kvalitativt, materiale.
 
 Skal et udsagn i et spørgeskema vurderes positivt eller negativt?
 
-Svært at afgøre. For at sikre os at mine personlige ideosynkrasier ikke farver
-datamaterialet (unødigt), sætter vi en kollega til, uafhængigt af mig, at vurdere
-materialet.
+Svært at afgøre. For at sikre os at mine personlige ideosynkrasier ikke farver datamaterialet (unødigt), sætter vi en kollega til, uafhængigt af mig, at vurdere materialet.
 
-Hvor godt gik det? Var vi enige?
+Hvor godt gik det? Var vi enige? Det bruger vi Cohens kappa til. 
+
+
 
 Man kunne beregne hvor mange procent af datapunkterne vi var enige om.
 
@@ -57,7 +55,6 @@ flere.
 funktionen kan findes i biblioteket vcd
 
 ~~~
-# install.packages("vcd")
 library(vcd)
 ~~~
 {: .language-r}
@@ -213,11 +210,14 @@ Null hypotesen, kappa = 0, hvis der  enighed, er det tilfældigt.
 Den alternative hypotese, kappa != 0, Enigheden er forskellig fra tilfældigheder.
 
 ## Den tekniske forklaring
-den er defineret somg P0 - Pe / (1-Pe)
-P0 er andelen af observeret enighed
-Pe er andelen af tilfældig enighed.
+den er defineret som 
 
-Når man ser hvordan den beregnes, lugter det af chi i anden testen. 
+$$\kappa = P_0 - \frac{P_e}{1-P_e}$$.
+
+
+$P_0$ er andelen af observeret enighed, $P_e$ er andelen af tilfældig enighed.
+
+Når man ser hvordan den beregnes, lugter det af $\chi^2$-testen. 
 Det er ikke et tilfælde:
 Feingold, Marcia (1992). "The Equivalence of Cohen's Kappa and Pearson's Chi-Square Statistics in the 2 × 2 Table." Educational and Psychological Measurement 52(1): 57-61. <http://hdl.handle.net/2027.42/67443>
 
@@ -255,25 +255,25 @@ $$P_0 = \frac{a + c}{N}$$
 
 Det var den lette.
 
-$P_e$ finder vi ved at finde sandsynligheden for at begge raters tilfældigt siger
-yes.
-Doctor1 siger Ja til R1/N tilfælde.
-Doctor2 siger Ja til C1/N tilfælde
+$P_e$ finder vi ved at finde sandsynligheden for at begge raters tilfældigt siger ja.
+
+Doctor1 siger Ja til $\frac{R_1}{N}$ tilfælde.
+Doctor2 siger Ja til $\frac{C_1}{N}$ tilfælde
 Sandsynligheden for at de tilfældigt begge siger ja er 
 $R1/N * C1/N$
 
 
 Så finder vi sandsynligheden for at de begge tilfældigt siger nej
-Doctor1 siger nej til R2/N
-Doctor2 siger nej til C2/N
+Doctor1 siger nej til $R_2/N$
+Doctor2 siger nej til $\frac{C_2}{N}$
 Sandysnligheden for at de begge tilfældigt siger nej er:
-$R2/N * C2/N$
+$R_2/N * C_2/N$
 
 Sandsynligheden for at de er enige er derfor:
-$R1/N * C1/N + R2/N * C2/N$
+$R_1/N * C_1/N + R_2/N * C_2/N$
 
 Så har vi Pe. Og kan beregne Kappa som:
-$\kappa = ((a+d)/N - (R1/N * C1/N + R2/N * C2/N))   / 1 - (R1/N * C1/N + R2/N * C2/N)$
+$\kappa = ((a+d)/N - (R_1/N * C_1/N + R_2/N * C_2/N))   / 1 - (R_1/N * C_1/N + R_2/N * C_2/N)$
 
 Det bliver noget mere langt, men ikke nødvendigvis langhåret, hvis der er 
 mere end en kategori.
@@ -295,10 +295,7 @@ Der er en funktion.
 
 ## Andet
 
-Hvor bruges det? Blandt andet inden for psykiatri/psykologi. Visse kliniske
-observationer kan pege på "personlighedsforstyrrelse" eller "Neurose". Hvilken
-af de to diagnoser der stilles afhænger i ret høj grad af et skøn. Derfor får 
-vi to uafhængige læger til at stille diagnosen.
+Hvor bruges det? Blandt andet inden for psykiatri/psykologi. Visse kliniske observationer kan pege på "personlighedsforstyrrelse" eller "Neurose". Hvilken af de to diagnoser der stilles, afhænger i ret høj grad af et skøn. Derfor får vi to uafhængige læger til at stille diagnosen.
 
 Når de gør de i større omfang - er de så enige?
 

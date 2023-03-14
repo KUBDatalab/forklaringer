@@ -207,11 +207,11 @@ Bemærk at vi skal ikke runde *af* . Vi skal runde *op*: 4.01 skal rundes op til
 
 ### Freedman-Diaconis 
 
-Bredden af bins skal sættes til 
+Bredden af bins skal sættes til: 
 
 $h = 2*IQR*n^{-1/3}$
 
-`IQR` får vi direkte fra funktionen `IQR()`
+Udtrykket `IQR` får vi direkte fra funktionen `IQR()`
 
 ### Kvadratrodsreglen
 
@@ -232,13 +232,10 @@ $k = \lceil2*n^{-1/3}\rceil$
 
 ### Doanes formel
 
-$k= 1 + \log_2(n) + \log_2(1+ |g_1|/\sigma_{g1})$ 
+$$k= 1 + \log_2(n) + \log_2(1+ |g_1|/\sigma_{g1})$$
 
-hvor
-
-$g_1$ er den estimerede 3. moments skewness af fordelingen, og 
-
-$\sigma_{g1} = \sqrt{6(n-2)/((n+1)*(n+3))}$
+hvor $g_1$ er den estimerede 3. moments skewness af fordelingen, og 
+$\sigma_{g1} = \sqrt{6(n-2)/((n+1)*(n+3))}$.
 
 Den er en modifikation af Sturges, der forsøger at give bedre resultater
 når data ikke er normalfordelte.
@@ -271,7 +268,7 @@ hvor sigma er standardafvigelsen af stikprøven.
 ## Hvordan i praksis?
 
 Vi kan nærlæse hjælpen til `hist()` funktionen indbygget i R. Den fortæller
-at hist som default beregner breaks efter "Sturges" algoritmen.
+at hist som default beregner breaks efter "Sturges" algoritmen. Men også at den kan ændres til noget andet.
 
 Det kan vi udnytte til at få breaks, her efter Freedman-Diaconis
 reglen:
