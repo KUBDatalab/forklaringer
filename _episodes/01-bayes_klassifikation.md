@@ -12,6 +12,7 @@ objectives:
 keypoints:
 - "FIXME"
 source: Rmd
+math: yes
 ---
 
 
@@ -20,7 +21,7 @@ source: Rmd
 
 Klassifikation baseret på Bayes teorem. 
 
-Det kan nok bære en hel side for sig. Men. 
+Denne side skal muligvis deles op i to.
 
 Bayes teorem fortæller os hvordan vi opdaterer vores overbevisning om 
 noget - baseret på ny viden.
@@ -28,14 +29,16 @@ noget - baseret på ny viden.
 Der er noget nomenklatur vi nok skal have styr på:
 
 P(B) er sandsynligheden for at hændelsen B sker.
+
 P(A|B) er sandsynligheden for at hændelsen A sker, *givet* at hændelsen B sker.
+
 P(A, B) er sandsynligheden for at hændelserne A *og* B sker.
 
 Der er også nogle regneregler det kan være værd at have styr på:
 
-$P(A, B) = P(A|B)P(B)$
+$$P(A, B) = P(A|B)P(B)$$
 
-$P(A, B) = P(B, A)$
+$$P(A, B) = P(B, A)$$
 
 $P(A|B) = \frac{P(A, B)}{P(B)}$
 
@@ -175,7 +178,7 @@ library(tidymodels)
 ✖ dplyr::filter()  masks stats::filter()
 ✖ dplyr::lag()     masks stats::lag()
 ✖ recipes::step()  masks stats::step()
-• Use tidymodels_prefer() to resolve common conflicts.
+• Search for functions across packages at https://www.tidymodels.org/find/
 ~~~
 {: .output}
 
@@ -283,32 +286,32 @@ Confusion Matrix and Statistics
 
            Reference
 Prediction  Adelie Chinstrap Gentoo
-  Adelie        31         0      0
-  Chinstrap      0        12      0
-  Gentoo         0         0     24
+  Adelie        36         1      0
+  Chinstrap      0         8      0
+  Gentoo         0         0     23
 
 Overall Statistics
-                                     
-               Accuracy : 1          
-                 95% CI : (0.9464, 1)
-    No Information Rate : 0.4627     
-    P-Value [Acc > NIR] : < 2.2e-16  
-                                     
-                  Kappa : 1          
-                                     
- Mcnemar's Test P-Value : NA         
+                                          
+               Accuracy : 0.9853          
+                 95% CI : (0.9208, 0.9996)
+    No Information Rate : 0.5294          
+    P-Value [Acc > NIR] : < 2.2e-16       
+                                          
+                  Kappa : 0.9747          
+                                          
+ Mcnemar's Test P-Value : NA              
 
 Statistics by Class:
 
                      Class: Adelie Class: Chinstrap Class: Gentoo
-Sensitivity                 1.0000           1.0000        1.0000
-Specificity                 1.0000           1.0000        1.0000
-Pos Pred Value              1.0000           1.0000        1.0000
-Neg Pred Value              1.0000           1.0000        1.0000
-Prevalence                  0.4627           0.1791        0.3582
-Detection Rate              0.4627           0.1791        0.3582
-Detection Prevalence        0.4627           0.1791        0.3582
-Balanced Accuracy           1.0000           1.0000        1.0000
+Sensitivity                 1.0000           0.8889        1.0000
+Specificity                 0.9688           1.0000        1.0000
+Pos Pred Value              0.9730           1.0000        1.0000
+Neg Pred Value              1.0000           0.9833        1.0000
+Prevalence                  0.5294           0.1324        0.3382
+Detection Rate              0.5294           0.1176        0.3382
+Detection Prevalence        0.5441           0.1176        0.3382
+Balanced Accuracy           0.9844           0.9444        1.0000
 ~~~
 {: .output}
 

@@ -392,12 +392,32 @@ Vi kan også få et fint plot med vores fit. Der kan vi bruge pakken *semPlot*:
 
 ~~~
 library(semPlot)
+~~~
+{: .language-r}
+
+
+
+~~~
+Error: package or namespace load failed for 'semPlot' in dyn.load(file, DLLpath = DLLpath, ...):
+ unable to load shared object '/home/runner/work/_temp/Library/igraph/libs/igraph.so':
+  libglpk.so.40: cannot open shared object file: No such file or directory
+~~~
+{: .error}
+
+
+
+~~~
 semPaths(fit, "std", layout = "tree", intercepts = F, residuals = T, nDigits = 2, 
          label.cex = 1, edge.label.cex=.95, fade = F)
 ~~~
 {: .language-r}
 
-<img src="../fig/rmd-04-unnamed-chunk-11-1.png" alt="plot of chunk unnamed-chunk-11" width="612" style="display: block; margin: auto;" />
+
+
+~~~
+Error in semPaths(fit, "std", layout = "tree", intercepts = F, residuals = T, : could not find function "semPaths"
+~~~
+{: .error}
 
 
 ## Men det er ikke første skridt.
