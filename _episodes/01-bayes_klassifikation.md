@@ -40,41 +40,40 @@ $$P(A, B) = P(A|B)P(B)$$
 
 $$P(A, B) = P(B, A)$$
 
-$P(A|B) = \frac{P(A, B)}{P(B)}$
+$$P(A|B) = \frac{P(A, B)}{P(B)}$$
 
-$P(A|B) \neq P(B|A)$
+$$P(A|B) \neq P(B|A)$$
 
 De regneregler kan vi bruge. Kender vi P(A|B), P(A) og P(B), kan 
 vi finde ud af at:
 
-$P(B|A) = \frac{P(A|B)P(B)}{P(A)}$
+$$P(B|A) = \frac{P(A|B)P(B)}{P(A)}$$
 
 Vi kan også finde ud af at:
 
-$P(!A) = 1 - P(A)$
+$$P(!A) = 1 - P(A)$$
 
 Hvor P(!A) er sandsynligheden for at A ikke sker.
 
 Og at 
 
-$P(B|!A) = 1 - P(!B|!A)$
+$$P(B|!A) = 1 - P(!B|!A)$$
 
 Altså at sandsynligheden for at B sker, hvis A *ikke* sker, er 1 minus
 sandsynligheden for at B ikke sker, når A heller ikke sker.
 
 Og endelig kan vi beregne P(B), hvis vi kender P(B|A) og P(A):
 
-$P(B) = P(B|A)*P(A) + P(B|!A)*P(!A)$
+$$P(B) = P(B|A)*P(A) + P(B|!A)*P(!A)$$
 
 
-Nu kan vi forstå hvad Bayes teorem egentlig siger:
+Nu kender vi de enkelte dele af Bayes teorem:
 
-$P(A|B) = \frac{P(B|A)P(A)}{P(B)}$
+$$P(A|B) = \frac{P(B|A)P(A)}{P(B)}$$
 
-Og hvad bruger vi så det til? Jo. Før B sker, har vi et bud på hvad sandsynligheden er for at A sker. 
+Og hvad bruger vi så det til? Jo. Før B sker, har vi et bud på hvad sandsynligheden er for at A sker. Det er P(A).
 
-Når B er sket, har vi en opdateret sandsynlighed. Vi forventer at sandsynligheden for at toget er forsinket til at være 20% (P(A) = 0.2). 
-Nu falder der blade på skinnerne. Hvad er nu vores bud på hvor forsinket toget er?
+*Når* B er sket, har vi en opdateret sandsynlighed. Det er P(A|B).
 
 P(A) er vores *prior*, det vi mener *før* B sker. P(A|B) er vores *posterior*, det vi mener om A, *efter* B er sket.
 
@@ -87,7 +86,7 @@ Sandsynligheden for at der er røg i det hele taget er 5% (P(B)). Og sandsynligh
 
 Hvis vi observerer røg, opdaterer vi vores bud på hvad sandsynligheden er for at der er ild:
 
-$P(ild|røg) = \frac{P(røg|ild)P(ild)}{P(røg)} = \frac{0.8*0.02}{0.05} = 0.32  = 32\%$
+$$P(ild|røg) = \frac{P(røg|ild)P(ild)}{P(røg)} = \frac{0.8*0.02}{0.05} = 0.32  = 32\%$$
 
 Før vi observerede røg, mente vi sandsynligheden for at der var ild var 2%. Nu ser vi røg. Så nu opdaterer vi vores bud på sandsynligheden for ild til at være 32%
 
@@ -103,33 +102,33 @@ P(B|A), altså sandsynligheden for at jeg får en positiv test, givet at jeg *ha
 
 Det vil være:
 
-$P(A|B) = \frac{P(B|A)P(A)}{P(B)} = \frac{0.95 * 0.01}{P(B)}$
+$$P(A|B) = \frac{P(B|A)P(A)}{P(B)} = \frac{0.95 * 0.01}{P(B)}$$
 
 Vi kender ikke P(B), sandsynligheden for at testen er negativ. Uanset om jeg har COVID eller ej. Men vi kan bruge regnereglerne ovenfor til at beregne det:
 
-$P(B) = P(B|A)*P(A) + P(B|!A)*P(!A)$
+$$P(B) = P(B|A)*P(A) + P(B|!A)*P(!A)$$
 
 Eller:
 
-$P(B) = 0.95*0.01 + P(B|!A)*P(!A)$
+$$P(B) = 0.95*0.01 + P(B|!A)*P(!A)$$
 
 Vi ved at:
 
-$P(!A) = 1 - P(A) = 1- 0.01 = 0.99$
+$$P(!A) = 1 - P(A) = 1- 0.01 = 0.99$$
 
 Det sætter vi ind, og får:
 
-$P(B) = 0.95*0.01 + P(B|!A)*0.99$
+$$P(B) = 0.95*0.01 + P(B|!A)*0.99$$
 
 P(B|!A) kender vi ikke. Det er de falsk positive. Der hvor testen er positiv, selvom patienten er negativ. Lad os sætte den til 5%
 
 Lad os sætte det ind:
 
-$P(B) = 0.95*0.01 + 0.05*0.99 = 0.059$
+$$P(B) = 0.95*0.01 + 0.05*0.99 = 0.059$$
 
 Det sætter vi også ind i vores oprindelige formel:
 
-$P(A|B) = \frac{P(B|A)P(A)}{P(B)} = \frac{0.95 * 0.01}{P(B)} = \frac{0.95 * 0.01}{0.059} = 0.161 = 16%$
+$$P(A|B) = \frac{P(B|A)P(A)}{P(B)} = \frac{0.95 * 0.01}{P(B)} = \frac{0.95 * 0.01}{0.059} = 0.161 = 16%$$
 
 Efter den positive test, opdaterer jeg derfor min vurdering af om jeg har COVID fra 1% til 16%. 
 
@@ -286,32 +285,32 @@ Confusion Matrix and Statistics
 
            Reference
 Prediction  Adelie Chinstrap Gentoo
-  Adelie        36         1      0
-  Chinstrap      0         8      0
-  Gentoo         0         0     23
+  Adelie        33         3      0
+  Chinstrap      0        13      0
+  Gentoo         0         0     30
 
 Overall Statistics
-                                          
-               Accuracy : 0.9853          
-                 95% CI : (0.9208, 0.9996)
-    No Information Rate : 0.5294          
-    P-Value [Acc > NIR] : < 2.2e-16       
-                                          
-                  Kappa : 0.9747          
-                                          
- Mcnemar's Test P-Value : NA              
+                                         
+               Accuracy : 0.962          
+                 95% CI : (0.893, 0.9921)
+    No Information Rate : 0.4177         
+    P-Value [Acc > NIR] : < 2.2e-16      
+                                         
+                  Kappa : 0.9399         
+                                         
+ Mcnemar's Test P-Value : NA             
 
 Statistics by Class:
 
                      Class: Adelie Class: Chinstrap Class: Gentoo
-Sensitivity                 1.0000           0.8889        1.0000
-Specificity                 0.9688           1.0000        1.0000
-Pos Pred Value              0.9730           1.0000        1.0000
-Neg Pred Value              1.0000           0.9833        1.0000
-Prevalence                  0.5294           0.1324        0.3382
-Detection Rate              0.5294           0.1176        0.3382
-Detection Prevalence        0.5441           0.1176        0.3382
-Balanced Accuracy           0.9844           0.9444        1.0000
+Sensitivity                 1.0000           0.8125        1.0000
+Specificity                 0.9348           1.0000        1.0000
+Pos Pred Value              0.9167           1.0000        1.0000
+Neg Pred Value              1.0000           0.9545        1.0000
+Prevalence                  0.4177           0.2025        0.3797
+Detection Rate              0.4177           0.1646        0.3797
+Detection Prevalence        0.4557           0.1646        0.3797
+Balanced Accuracy           0.9674           0.9062        1.0000
 ~~~
 {: .output}
 
