@@ -268,85 +268,51 @@ uafhængig af husene, er .874.
 Summa-summarum, 0.874 er større end 0.05, der er ikke en forskel.
 
 
-Lidt mere matematisk:
-
-$H_0$ vores null-hypotese, køn og hus er uafhængige
-$H_a$ vores alternative hypotese, de er ikke uafhængige
-
-Der er en subtil forskel på at sige at de ikke er uafhængige, og at de er afhængige.
-Men det springer vi over her.
-
-Forventede resultater:
-
-$$\sum_{i,j}R_i C_j$$
-SUM_ij = R_i * C_j 7 N
-
-Teststatistikken:
-
-$$\sum$$
-SUM_i,j = 1 til n = (O_ij - Eij)^2 / E_ij
-
-notationn for den kritiske værdi;:
-Chi^2_0.05,3
-
-Der er to muligheder. enten er vores test-statistik lavere end chi^2 værdien.
-Så kan vi ikke afvise hypotesnen om  uafhængighed. Der er ingen sammenhæng mellem
-køn og hus.
-
-Teststatistikken er højere. Så afviser vi hypotesen om uafhængighed. 
-Det er ikke det samme som at vi kan konkludere at H_a er sand. Blot at H_0 ikke er.
-
-(med 5% sandsynlighed og sådan.)
-
-
 # Hvad får vi ellers:
 
-```{r, eval = F}
+Det vi umiddelbart får er
+```{r, eval = T}
 test <- chisq.test(data_1)
 
 test
 ```
 
-der er en del andet output der kan være interessant:
+Men resultatet indeholder en del anden interessant:
+
 
 ```{r, eval = F}
 test$residuals
 ```
-det var dem vi selv beregnede. sådan da. der er noget med nogle kvadrater. 
+Hvis vi kvadrerer dem, så er det de værdier vi selv fandt ovenfor.
 
-```{r, eval = F}
-sqrt(3.29)
-```
-Sådan ca. Og hvis vi kvadrerer alle tallene og lægger dem sammen:
-```{r, eval = F}
-sum(test$residuals^2)
-```
-Får vi søreme vores testværdi!
+Test-værdien kan trækkes ud på denne måde:
 
-Som vi også kan trække ud på denne måde:
+
 ```{r, eval = F}
 test$statistic
 ```
 
 
 Hvis vi ønsker at se de forventede værdier:
-```{r, eval = F}
+```{r, eval = T}
 test$expected
 ```
 
 Og skulle vi have glemt hvilke tal vi puttede ind i funktionen:
-```{r, eval = F}
+```{r, eval = T}
 test$observed
 ```
 Skal vi bruge den beregnede p-værdi, så er den der også:
-```{r, eval = F}
+```{r, eval = T}
 test$p.value
 ```
+
 Tilsvarende med antallet af frihedsgrader:
-```{r, eval = F}
+```{r, eval = T}
 test$parameter
 ```
+
 Har vi glemt hvad det var for en test vi lavede ligger den her:
-```{r, eval = F}
+```{r, eval = T}
 test$method
 ```
