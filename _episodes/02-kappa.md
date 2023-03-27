@@ -20,39 +20,35 @@ math: yes
 
 
 ## TL;DR
+Cohens Kappa bruges til at måle om kategorisering af ting sker pålideligt.
 
-Bruges til at måle om kategorisering af ting sker pålideligt.
-
-To "raters" rater noget. Det kan være en vurdering af farve eller andet 
-kategorisk, som regel kvalitativt, materiale.
+To eller flere "raters" kategoriserer et eller andet. 
 
 Skal et udsagn i et spørgeskema vurderes positivt eller negativt?
 
-Svært at afgøre. For at sikre os at mine personlige ideosynkrasier ikke farver datamaterialet (unødigt), sætter vi en kollega til, uafhængigt af mig, at vurdere materialet.
+Der er ikke tilstrækkeligt objektive kriterier til at lade computeren gøre det. 
+Så der skal et skøn fra et menneske ind over. Og best practice er at lade flere skønne.
 
-Hvor godt gik det? Var vi enige? Det bruger vi Cohens kappa til. 
+I humanvidenskaberne taler man om et resultat er "intersubjektivt overførbart". Om
+to personers subjektive vurderinger, baseret på tilgængelige data, er ens. 
 
+Cohens Kappa lader os teste hvor ensartede skønnene er, og tager højde for at to 
+raters måske er enige ved et tilfælde, og ikke fordi de skønner ens.
 
+Cohens Kappa kan bruges direkte for to kategoriske variable. Enten to nominale 
+eller to ordinale variable. Men kun for præcist to raters.
 
-Man kunne beregne hvor mange procent af datapunkterne vi var enige om.
+Der findes varianter, der er gode til forskellige ting:
 
-Men det tager ikke højde for at vi måske er enige ved et tilfælde.
+* Vægtet kappa (weighted kappa), der kun kan bruges for ordinale variable
+* Light's kappa, 
+* Fleiss kappa. 
 
-Så bruger vi Cohens Kappa til at give et bedre mål.
-
-cohens kappa kan bruges direkte for to kategoriske variable. Enten to nominale 
-eller to ordinale variable.
-
-Der findes varianter.
-
-Vægtet kappa (weighted kappa), der kun kan bruges for ordinale variable
-Light's kappa, Håndterer når vi har mere end to kategoriske variable -
-snittet af alle mulige two-raters cohens kappa.
-Fleiss kappa. en tilpasning af cohens kappa, for n raters, hvor n kan være to eller
-flere.
+Særligt Light's og Fleiss kappa er nyttige når man har mere end to raters.
+Forskellene er subtile - så læs selv op på dem.
 
 ## den korte forklaring
-funktionen kan findes i biblioteket vcd
+Funktionen kan findes i biblioteket vcd
 
 ~~~
 library(vcd)
@@ -73,47 +69,42 @@ library(tidyverse)
 ~~~
 {: .language-r}
 
-Vi skal have data i en matrix:
+Vi genererer 30 observationer, med to raters, og de kategoriske muligheder:
+dpe, dis, sch, neu, other.
 
-Vi har 30 observationer, to raters, og de kategoriske muligheder
-dep, dis, neu, sch, oth
+
 
 
 
 ~~~
-diagnoses <- tribble(~rater1, ~rater2,
-  "dep", "dep",
-  "dep", "dep",
-  "dep", "dep",
-  "dep", "dep",
-  "dep", "dep",
-  "dep", "dep",
-  "dep", "dep",
-  "dep", "dis",
-  "dep", "sch",
-  "dep", "sch",
-  "dep", "neu",
-  "dep", "neu",
-  "dep", "neu",
-  "dis", "dis",
-  "dis", "dis",
-  "dis", "dis",
-  "dis", "dis",
-  "dis", "dis",
-  "dis", "dis",
-  "dis", "dis",
-  "dis", "dis",
-  "dis", "sch",
-  "dis", "sch",
-  "sch", "sch",
-  "sch", "sch",
-  "neu", "neu",
-  "oth", "oth",
-  "oth", "oth",
-  "oth", "oth",
-  "oth", "oth"
-  )
+head(diagnoses)
+~~~
+{: .language-r}
 
+
+
+~~~
+# A tibble: 6 × 2
+  rater1 rater2
+  <chr>  <chr> 
+1 dep    dep   
+2 dep    dep   
+3 dep    dep   
+4 dep    dep   
+5 dep    dep   
+6 dep    dep   
+~~~
+{: .output}
+
+
+Dette er et eksempel på data hvor Cohens Kappa faktisk bruges. To psykologer 
+vurderer 30 forskellige patienter, og stiller en diagnose. Som en del af deres
+træning, testes de på om de stiller samme diagnoser som mere erfarne.
+
+Vi skal have en tabel med deres ratings:
+
+
+~~~
 tabel <- table(diagnoses)
 tabel
 ~~~
@@ -131,6 +122,8 @@ rater1 dep dis neu oth sch
    sch   0   0   0   0   2
 ~~~
 {: .output}
+Det er denne tabel der skal ind i funktionen:
+Var der fuld enighed mellem de to raters, 
 
 
 ~~~
@@ -147,7 +140,15 @@ Unweighted 0.6507 0.0999 6.513 7.372e-11
 Weighted   0.5588 0.1282 4.359 1.304e-05
 ~~~
 {: .output}
-et 95% konfidensinterval (pil ved argumenter hvis du vil have et andet)
+
+Vægtet eller uvægtet? Hvis der ikke er vægte, tæller vi bare om der er enighed.
+Med vægte - så er der nogen uenigheder der er dårligere end andre. 
+Det kan godt være to raters er uenige om farven på blomsten er rød eller mørkerød.
+Men det er værre hvis de er uenige om den er rød eller gul. Det styres af vægtene.
+
+
+Et 95% konfidensinterval (pil ved argumenter hvis du vil have et andet) kan findes
+ved:
 
 ~~~
 confint(res.k)
@@ -193,26 +194,28 @@ Det er ofte ikke helt godt nok.
 Så overvej nøje hvad den faktisk bruges til. I et klinisk laboratorium er det 
 ikke så godt hvis 40% af vurderinger er forkerte.
 
-## forudsætninger
+## Forudsætninger
 
 For Cohens kappa:
+
 To outcome categorical variables - ordinal eller nominal
 
 De to outcome variable skal have præcis de samme kategorier
 
-Parrede observationer. Hver ting skal være kategoriseret to gange, af to
-uafhængige raters (eller metoder)
+Parrede observationer. Det vil sige, at hver ting skal være kategoriseret to 
+gange, af to uafhængige raters (eller metoder)
 
 De samme to raters skal bruges for alle deltagere.
 
 Hypoteser:
-Null hypotesen, kappa = 0, hvis der  enighed, er det tilfældigt.
+
+Null hypotesen, kappa = 0, hvis der er enighed, er det tilfældigt.
 Den alternative hypotese, kappa != 0, Enigheden er forskellig fra tilfældigheder.
 
 ## Den tekniske forklaring
-den er defineret som 
+Kappa er defineret som:
 
-$$\kappa = P_0 - \frac{P_e}{1-P_e}$$.
+$$\kappa = P_0 - \frac{P_e}{1-P_e}$$
 
 
 $P_0$ er andelen af observeret enighed, $P_e$ er andelen af tilfældig enighed.
@@ -221,7 +224,7 @@ Når man ser hvordan den beregnes, lugter det af $\chi^2$-testen.
 Det er ikke et tilfælde:
 Feingold, Marcia (1992). "The Equivalence of Cohen's Kappa and Pearson's Chi-Square Statistics in the 2 × 2 Table." Educational and Psychological Measurement 52(1): 57-61. <http://hdl.handle.net/2027.42/67443>
 
-Hvis der er to raters og to udfald, er test statistikken for kappa den samme
+Hvis der er to raters og to udfald, er test statistikken for Kappa den samme
 som for Pearsons chi i anden. Så de er i familie.
 
 Anyway, definitionen betyder at værdierne kan gå fra -1 til 1. Hvis den er 0,
@@ -295,8 +298,15 @@ Der er en funktion.
 
 ## Andet
 
-Hvor bruges det? Blandt andet inden for psykiatri/psykologi. Visse kliniske observationer kan pege på "personlighedsforstyrrelse" eller "Neurose". Hvilken af de to diagnoser der stilles, afhænger i ret høj grad af et skøn. Derfor får vi to uafhængige læger til at stille diagnosen.
+Hvor bruges det? Blandt andet inden for psykiatri/psykologi. Visse kliniske 
+observationer kan pege på "personlighedsforstyrrelse" eller "Neurose". Hvilken 
+af de to diagnoser der stilles, afhænger i ret høj grad af et skøn. Derfor får 
+vi to uafhængige læger til at stille diagnosen.
 
-Når de gør de i større omfang - er de så enige?
+Når de læger bliver trænet, bliver de bedt om at vurdere forskellige 
+beskrivelser af patienter, og de testes på i hvor høj grad de er enige med 
+mere rutinerede læger.
 
-Men den bruges også til meget andet.
+Men den kan bruges også til meget andet. Markedsundersøgeres bedømmelse af 
+svar fra respondenter. Eller hvis vi bygger en algoritme der kan se forskel
+på hunde og katte på billeder - er den enig med et menneske?

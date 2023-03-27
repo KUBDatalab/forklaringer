@@ -140,7 +140,7 @@ shapiro.test(normalt)
 	Shapiro-Wilk normality test
 
 data:  normalt
-W = 0.99709, p-value = 0.06617
+W = 0.99922, p-value = 0.9602
 ~~~
 {: .output}
 p-værdien er >0.1, så vi kan ikke afvise 0-hypotesen om at data er normalfordelte.
@@ -160,7 +160,7 @@ shapiro.test(unormalt)
 	Shapiro-Wilk normality test
 
 data:  unormalt
-W = 0.9573, p-value < 2.2e-16
+W = 0.95509, p-value < 2.2e-16
 ~~~
 {: .output}
 Meget lav p-værdi. Så vi afviser 0-hypotesen om at data er normalfordelte.
@@ -189,7 +189,7 @@ ks.test(normalt, "pnorm", mean(normalt, sd(normalt)))
 	Asymptotic one-sample Kolmogorov-Smirnov test
 
 data:  normalt
-D = 0.030322, p-value = 0.3168
+D = 0.013553, p-value = 0.9929
 alternative hypothesis: two-sided
 ~~~
 {: .output}
@@ -210,7 +210,7 @@ ks.test(unormalt, "pnorm", mean(unormalt, sd(unormalt)))
 	Asymptotic one-sample Kolmogorov-Smirnov test
 
 data:  unormalt
-D = 0.31285, p-value < 2.2e-16
+D = 0.30888, p-value < 2.2e-16
 alternative hypothesis: two-sided
 ~~~
 {: .output}
@@ -238,7 +238,7 @@ ad.test(normalt)
 	Anderson-Darling normality test
 
 data:  normalt
-A = 0.43214, p-value = 0.3039
+A = 0.14673, p-value = 0.9669
 ~~~
 {: .output}
 p-værdien er større end 0.05, og vi konkluderer derfor at 0-hypotesen ikke kan afvises, og at vores data derfor er normalfordelte.
@@ -257,7 +257,7 @@ ad.test(unormalt)
 	Anderson-Darling normality test
 
 data:  unormalt
-A = 10.576, p-value < 2.2e-16
+A = 10.715, p-value < 2.2e-16
 ~~~
 {: .output}
 Her er p-værdien meget lille, og vi afviser derfor 0-hypotesen om at data er normalfordelte. 
@@ -311,7 +311,7 @@ cvm.test(normalt, 'pnorm')
 	Parameters assumed to be fixed
 
 data:  normalt
-omega2 = 0.063585, p-value = 0.7915
+omega2 = 0.028725, p-value = 0.9802
 ~~~
 {: .output}
 p-værdien er meget højere end 0.05, og vi kan derfor ikke afvise 0-hypotesen om at data er normalfordelte.
@@ -333,7 +333,7 @@ cvm.test(unormalt, 'pnorm')
 	Parameters assumed to be fixed
 
 data:  unormalt
-omega2 = 69.663, p-value < 2.2e-16
+omega2 = 69.923, p-value < 2.2e-16
 ~~~
 {: .output}
 Her er p-værdien meget mindre end 0.05, og vi afviser derfor 0-hypotesen om at data er normalfordelte.
@@ -357,7 +357,7 @@ lillie.test(normalt)
 	Lilliefors (Kolmogorov-Smirnov) normality test
 
 data:  normalt
-D = 0.020748, p-value = 0.3716
+D = 0.012763, p-value = 0.958
 ~~~
 {: .output}
 Ikke-normaltfordelte data:
@@ -374,7 +374,7 @@ lillie.test(unormalt)
 	Lilliefors (Kolmogorov-Smirnov) normality test
 
 data:  unormalt
-D = 0.066999, p-value = 2.036e-11
+D = 0.063196, p-value = 4.305e-10
 ~~~
 {: .output}
 Lilliefors testen er en variant over Kolmogorov-Smirnov-testen, der 

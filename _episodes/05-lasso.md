@@ -115,7 +115,7 @@ The following objects are masked from 'package:tidyr':
 
 
 ~~~
-Loaded glmnet 4.1-6
+Loaded glmnet 4.1-7
 ~~~
 {: .output}
 

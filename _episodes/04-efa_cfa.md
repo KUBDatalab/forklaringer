@@ -392,32 +392,12 @@ Vi kan også få et fint plot med vores fit. Der kan vi bruge pakken *semPlot*:
 
 ~~~
 library(semPlot)
-~~~
-{: .language-r}
-
-
-
-~~~
-Error: package or namespace load failed for 'semPlot' in dyn.load(file, DLLpath = DLLpath, ...):
- unable to load shared object '/home/runner/work/_temp/Library/igraph/libs/igraph.so':
-  libglpk.so.40: cannot open shared object file: No such file or directory
-~~~
-{: .error}
-
-
-
-~~~
 semPaths(fit, "std", layout = "tree", intercepts = F, residuals = T, nDigits = 2, 
          label.cex = 1, edge.label.cex=.95, fade = F)
 ~~~
 {: .language-r}
 
-
-
-~~~
-Error in semPaths(fit, "std", layout = "tree", intercepts = F, residuals = T, : could not find function "semPaths"
-~~~
-{: .error}
+<img src="../fig/rmd-04-unnamed-chunk-11-1.png" alt="plot of chunk unnamed-chunk-11" width="612" style="display: block; margin: auto;" />
 
 
 ## Men det er ikke første skridt.
@@ -472,14 +452,14 @@ Cumulative Proportion 0.44 0.70 0.82 0.92 0.95 0.97 0.99 1.00
 Mean item complexity =  2.6
 Test of the hypothesis that 8 factors are sufficient.
 
-The degrees of freedom for the null model are  36  and the objective function was  3.05 with Chi Square of  904.1
-The degrees of freedom for the model are -8  and the objective function was  0 
+df null model =  36  with the objective function =  3.05 with Chi Square =  904.1
+df of  the model are -8  and the objective function was  0 
 
 The root mean square of the residuals (RMSR) is  0 
 The df corrected root mean square of the residuals is  NA 
 
-The harmonic number of observations is  301 with the empirical chi square  0  with prob <  NA 
-The total number of observations was  301  with Likelihood Chi Square =  0  with prob <  NA 
+The harmonic n.obs is  301 with the empirical chi square  0  with prob <  NA 
+The total n.obs was  301  with Likelihood Chi Square =  0  with prob <  NA 
 
 Tucker Lewis Index of factoring reliability =  1.042
 Fit based upon off diagonal values = 1
@@ -544,6 +524,23 @@ library(GPArotation)
 
 
 ~~~
+
+Attaching package: 'GPArotation'
+~~~
+{: .output}
+
+
+
+~~~
+The following objects are masked from 'package:psych':
+
+    equamax, varimin
+~~~
+{: .output}
+
+
+
+~~~
 hs.efa3 <- fa(select(HolzingerSwineford1939, x1:x9), nfactors = 3, rotate = "oblimin", fm = "ml")
 
 hs.efa3
@@ -584,14 +581,14 @@ ML2 0.22 0.27 1.00
 Mean item complexity =  1.2
 Test of the hypothesis that 3 factors are sufficient.
 
-The degrees of freedom for the null model are  36  and the objective function was  3.05 with Chi Square of  904.1
-The degrees of freedom for the model are 12  and the objective function was  0.08 
+df null model =  36  with the objective function =  3.05 with Chi Square =  904.1
+df of  the model are 12  and the objective function was  0.08 
 
 The root mean square of the residuals (RMSR) is  0.02 
 The df corrected root mean square of the residuals is  0.03 
 
-The harmonic number of observations is  301 with the empirical chi square  8.03  with prob <  0.78 
-The total number of observations was  301  with Likelihood Chi Square =  22.38  with prob <  0.034 
+The harmonic n.obs is  301 with the empirical chi square  8.03  with prob <  0.78 
+The total n.obs was  301  with Likelihood Chi Square =  22.38  with prob <  0.034 
 
 Tucker Lewis Index of factoring reliability =  0.964
 RMSEA index =  0.053  and the 90 % confidence intervals are  0.015 0.088

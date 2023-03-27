@@ -21,119 +21,12 @@ math: yes
 
 Klassifikation baseret på Bayes teorem. 
 
-Denne side skal muligvis deles op i to.
-
 Bayes teorem fortæller os hvordan vi opdaterer vores overbevisning om 
-noget - baseret på ny viden.
-
-Der er noget nomenklatur vi nok skal have styr på:
-
-P(B) er sandsynligheden for at hændelsen B sker.
-
-P(A|B) er sandsynligheden for at hændelsen A sker, *givet* at hændelsen B sker.
-
-P(A, B) er sandsynligheden for at hændelserne A *og* B sker.
-
-Der er også nogle regneregler det kan være værd at have styr på:
-
-$$P(A, B) = P(A|B)P(B)$$
-
-$$P(A, B) = P(B, A)$$
-
-$$P(A|B) = \frac{P(A, B)}{P(B)}$$
-
-$$P(A|B) \neq P(B|A)$$
-
-De regneregler kan vi bruge. Kender vi P(A|B), P(A) og P(B), kan 
-vi finde ud af at:
-
-$$P(B|A) = \frac{P(A|B)P(B)}{P(A)}$$
-
-Vi kan også finde ud af at:
-
-$$P(!A) = 1 - P(A)$$
-
-Hvor P(!A) er sandsynligheden for at A ikke sker.
-
-Og at 
-
-$$P(B|!A) = 1 - P(!B|!A)$$
-
-Altså at sandsynligheden for at B sker, hvis A *ikke* sker, er 1 minus
-sandsynligheden for at B ikke sker, når A heller ikke sker.
-
-Og endelig kan vi beregne P(B), hvis vi kender P(B|A) og P(A):
-
-$$P(B) = P(B|A)*P(A) + P(B|!A)*P(!A)$$
+noget - baseret på ny viden. Det kan du læse mere om andetsteds på disse sider.
 
 
-Nu kender vi de enkelte dele af Bayes teorem:
 
-$$P(A|B) = \frac{P(B|A)P(A)}{P(B)}$$
-
-Og hvad bruger vi så det til? Jo. Før B sker, har vi et bud på hvad sandsynligheden er for at A sker. Det er P(A).
-
-*Når* B er sket, har vi en opdateret sandsynlighed. Det er P(A|B).
-
-P(A) er vores *prior*, det vi mener *før* B sker. P(A|B) er vores *posterior*, det vi mener om A, *efter* B er sket.
-
-Der går sjældent røg af en brand, uden at der er ild i den.
-
-Hvad er sandsynligheden for at der er brand, hvis der er røg?
-
-Vi mener at sandsynligheden for at der er ild er 2% (P(A)). 
-Sandsynligheden for at der er røg i det hele taget er 5% (P(B)). Og sandsynligheden for at der er røg, hvis der er ild er 80% (P(B|A)).
-
-Hvis vi observerer røg, opdaterer vi vores bud på hvad sandsynligheden er for at der er ild:
-
-$$P(ild|røg) = \frac{P(røg|ild)P(ild)}{P(røg)} = \frac{0.8*0.02}{0.05} = 0.32  = 32\%$$
-
-Før vi observerede røg, mente vi sandsynligheden for at der var ild var 2%. Nu ser vi røg. Så nu opdaterer vi vores bud på sandsynligheden for ild til at være 32%
-
-### Hvor er det ellers nyttigt?
-
-Folk har en tilbøjelighed til at vurdere sandsynligheder forkert. Sandsynligheden for at jeg har COVID-19, er 1%. Jeg bliver testet med en test der er 95% sikker (som i - hvis den er positiv, er der 95% sandsynlighed for at jeg har COVID-19).
-
-Så når jeg får stukket vatpinden i næsen, er gættet på om jeg har COVID-19 1%. Når resultatet kommer positivt tilbage, hvad er så bedste gæt på om jeg har COVID-19?
-
-Min posterior, sandsynligheden for at jeg har COVID, P(A) = 0.01. 
-Sandsynligheden for en positiv test, *hvis* jeg *har* COVID: P(B|A) 0.95
-P(B|A), altså sandsynligheden for at jeg får en positiv test, givet at jeg *har* COVID-19, er 0.95.
-
-Det vil være:
-
-$$P(A|B) = \frac{P(B|A)P(A)}{P(B)} = \frac{0.95 * 0.01}{P(B)}$$
-
-Vi kender ikke P(B), sandsynligheden for at testen er negativ. Uanset om jeg har COVID eller ej. Men vi kan bruge regnereglerne ovenfor til at beregne det:
-
-$$P(B) = P(B|A)*P(A) + P(B|!A)*P(!A)$$
-
-Eller:
-
-$$P(B) = 0.95*0.01 + P(B|!A)*P(!A)$$
-
-Vi ved at:
-
-$$P(!A) = 1 - P(A) = 1- 0.01 = 0.99$$
-
-Det sætter vi ind, og får:
-
-$$P(B) = 0.95*0.01 + P(B|!A)*0.99$$
-
-P(B|!A) kender vi ikke. Det er de falsk positive. Der hvor testen er positiv, selvom patienten er negativ. Lad os sætte den til 5%
-
-Lad os sætte det ind:
-
-$$P(B) = 0.95*0.01 + 0.05*0.99 = 0.059$$
-
-Det sætter vi også ind i vores oprindelige formel:
-
-$$P(A|B) = \frac{P(B|A)P(A)}{P(B)} = \frac{0.95 * 0.01}{P(B)} = \frac{0.95 * 0.01}{0.059} = 0.161 = 16%$$
-
-Efter den positive test, opdaterer jeg derfor min vurdering af om jeg har COVID fra 1% til 16%. 
-
-
-Hvordan klassificerer vi så med Bayes?
+### Hvordan klassificerer vi så med Bayes?
 
 Naiv bayes antager at de prediktive variable er uafhængige af hinanden.
 
@@ -160,7 +53,7 @@ library(tidymodels)
 ~~~
 ✔ broom        1.0.4     ✔ recipes      1.0.5
 ✔ dials        1.1.0     ✔ rsample      1.1.1
-✔ dplyr        1.1.0     ✔ tibble       3.2.0
+✔ dplyr        1.1.1     ✔ tibble       3.2.1
 ✔ ggplot2      3.4.1     ✔ tidyr        1.3.0
 ✔ infer        1.0.4     ✔ tune         1.0.1
 ✔ modeldata    1.1.0     ✔ workflows    1.1.3
@@ -177,7 +70,7 @@ library(tidymodels)
 ✖ dplyr::filter()  masks stats::filter()
 ✖ dplyr::lag()     masks stats::lag()
 ✖ recipes::step()  masks stats::step()
-• Search for functions across packages at https://www.tidymodels.org/find/
+• Use tidymodels_prefer() to resolve common conflicts.
 ~~~
 {: .output}
 
@@ -266,14 +159,62 @@ The following object is masked from 'package:parsnip':
 
 
 ~~~
+head(penguins)
+~~~
+{: .language-r}
+
+
+
+~~~
+# A tibble: 6 × 7
+  species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+  <fct>   <fct>              <dbl>         <dbl>             <int>       <int>
+1 Adelie  Torgersen           39.1          18.7               181        3750
+2 Adelie  Torgersen           39.5          17.4               186        3800
+3 Adelie  Torgersen           40.3          18                 195        3250
+4 Adelie  Torgersen           NA            NA                  NA          NA
+5 Adelie  Torgersen           36.7          19.3               193        3450
+6 Adelie  Torgersen           39.3          20.6               190        3650
+# ℹ 1 more variable: sex <fct>
+~~~
+{: .output}
+Vi har nogen data på pingviner. Nu vil vi godt lave en model, der, baseret
+på dimensioner af næb, vægt, køn og vægt, forudsiger hvilken slags pingvin
+der er tale om.
+
+Vi starter med at lave et test og et træningssæt af data. Vi piller øen 
+pingvinerne er observeret på ud af datasættet:
+
+
+~~~
 penguin_sample <- sample(c(TRUE, FALSE), nrow(penguins), replace=TRUE, prob=c(0.8,0.2))
-penguin_train  <- penguins[penguin_sample, ]
-penguin_test   <- penguins[!penguin_sample, ]
+data <- penguins %>% select(-island)
+penguin_train  <- data[penguin_sample, ]
+penguin_test   <- data[!penguin_sample, ]
+~~~
+{: .language-r}
 
+Så laver vi en simpel model:
+
+
+~~~
 penguin_model <- naiveBayes(species~., penguin_train)
+~~~
+{: .language-r}
 
-penguin_predictions <- predict(penguin_model, newdata = penguin_test) 
+Og bruger den til at forudsige hvilken slags pingviner det er vi har i vores
+test-datasæt:
 
+
+~~~
+penguin_predictions <- predict(penguin_model, newdata = penguin_test)
+~~~
+{: .language-r}
+
+Hvordan gik det?
+
+
+~~~
 confusionMatrix(penguin_predictions, penguin_test$species)
 ~~~
 {: .language-r}
@@ -285,39 +226,123 @@ Confusion Matrix and Statistics
 
            Reference
 Prediction  Adelie Chinstrap Gentoo
-  Adelie        33         3      0
+  Adelie        37         1      1
   Chinstrap      0        13      0
-  Gentoo         0         0     30
+  Gentoo         0         0     18
 
 Overall Statistics
-                                         
-               Accuracy : 0.962          
-                 95% CI : (0.893, 0.9921)
-    No Information Rate : 0.4177         
-    P-Value [Acc > NIR] : < 2.2e-16      
-                                         
-                  Kappa : 0.9399         
-                                         
- Mcnemar's Test P-Value : NA             
+                                          
+               Accuracy : 0.9714          
+                 95% CI : (0.9006, 0.9965)
+    No Information Rate : 0.5286          
+    P-Value [Acc > NIR] : < 2.2e-16       
+                                          
+                  Kappa : 0.9523          
+                                          
+ Mcnemar's Test P-Value : NA              
 
 Statistics by Class:
 
                      Class: Adelie Class: Chinstrap Class: Gentoo
-Sensitivity                 1.0000           0.8125        1.0000
-Specificity                 0.9348           1.0000        1.0000
-Pos Pred Value              0.9167           1.0000        1.0000
-Neg Pred Value              1.0000           0.9545        1.0000
-Prevalence                  0.4177           0.2025        0.3797
-Detection Rate              0.4177           0.1646        0.3797
-Detection Prevalence        0.4557           0.1646        0.3797
-Balanced Accuracy           0.9674           0.9062        1.0000
+Sensitivity                 1.0000           0.9286        0.9474
+Specificity                 0.9394           1.0000        1.0000
+Pos Pred Value              0.9487           1.0000        1.0000
+Neg Pred Value              1.0000           0.9825        0.9808
+Prevalence                  0.5286           0.2000        0.2714
+Detection Rate              0.5286           0.1857        0.2571
+Detection Prevalence        0.5571           0.1857        0.2571
+Balanced Accuracy           0.9697           0.9643        0.9737
 ~~~
 {: .output}
+Det gik fint. Der er lidt forvirring i modellen - Et par chinstrap pingviner
+bliver forudsagt til at være Adelie. En enkelt Adelie pingvin bliver
+forudsagt til at være en Chinstrap. 
+
+De statistikker vi får ud når vi laver vores confusionmatrix er omtalt her
+på siden om maskinlæringsmetrikker.
+
+Hvordan ser modellen egentlig ud?
+
+~~~
+penguin_model
+~~~
+{: .language-r}
+
+
+
+~~~
+
+Naive Bayes Classifier for Discrete Predictors
+
+Call:
+naiveBayes.default(x = X, y = Y, laplace = laplace)
+
+A-priori probabilities:
+Y
+   Adelie Chinstrap    Gentoo 
+0.4197080 0.1970803 0.3832117 
+
+Conditional probabilities:
+           bill_length_mm
+Y               [,1]     [,2]
+  Adelie    39.01316 2.713275
+  Chinstrap 48.75000 3.124447
+  Gentoo    47.53238 2.933313
+
+           bill_depth_mm
+Y               [,1]      [,2]
+  Adelie    18.30439 1.2428479
+  Chinstrap 18.50370 1.1145628
+  Gentoo    15.00667 0.9717418
+
+           flipper_length_mm
+Y               [,1]     [,2]
+  Adelie    189.9561 6.682947
+  Chinstrap 196.0926 7.206571
+  Gentoo    217.1333 6.370102
+
+           body_mass_g
+Y               [,1]     [,2]
+  Adelie    3706.140 479.1396
+  Chinstrap 3731.944 411.5496
+  Gentoo    5071.190 498.0947
+
+           sex
+Y              female      male
+  Adelie    0.5000000 0.5000000
+  Chinstrap 0.4814815 0.5185185
+  Gentoo    0.4752475 0.5247525
+~~~
+{: .output}
+Det bliver en del mere komplekst når der er flere parametre involveret.
+
+Men vores priors, de sandsynligheder vi starter med, og som vi opdaterer,
+er at der er 44% sandsynlighed for at det er en Adelie pingvin. Det er den andel 
+af dem der er i vores træningssæt. Kigger vi på kønnene, får vi at vide at 
+hvis du er en æselpingvin (gentoo), så er sandsynligheden for at du er en
+hanpingvin, 0.5102041. Så når nu vi observerer at det er en hanpingvin vi har, 
+så kan vi opdatere vores estimat af hvor sandsynligt det er at du er en æselpingvin.
+
+Det er mere kompliceret for vægten dimensionerne for næb og for vingerne. Det vi
+får er gennemsnit og standardafvigelse på en - antaget - normalfordeling. 
+Er pingvinen en chinstrap, har den en sandsynlighedsfordeling for dens vægt. 
+Hvis vi kender pingvinens vægt, kan vi udtale os om hvor sandsynlig den vægt er for
+de tre forskellige slags pingviner. Og så kan vi opdatere vores estimat på hvilken
+slags pingvin vi har foran os.
+
+I praksis kigger vi nok bare på pingvinen, og ser hvilken slags pingvin den ligner.
+
+
 
 ### Hvornår bruger man Naiv Bayes i stedet for andre klassifikationer?
 
-Lærebøgerne fortæller at Bayes har en fordel ved at håndtere både kontinuert og diskret data i et hug. Men er bedst til kategoriske data.  At den skalerer ret godt til større datasæt. Og klarer sig ret godt med mindre træningsdata end andre metoder. 
+Lærebøgerne fortæller at Bayes har en fordel ved at håndtere både kontinuert og 
+diskret data i et hug. Men er bedst til kategoriske data.  At den skalerer ret 
+godt til større datasæt. Og klarer sig ret godt med mindre træningsdata end andre metoder. 
 
 Forudsætningen er dog at de features der fittes på er uafhængige af hinanden.
 
-
+Det holder ikke helt. Hanpingviner er tilbøjelige til at være større end 
+hunpingviner, så køn og kropsvægt er ikke uafhængige. Længden af næbbet og dybden
+af næbbet er formentlig heller ikke uafhængige. Så forudsætningerne holder nok 
+ikke helt. Men det gør de sjældent.

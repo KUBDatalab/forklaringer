@@ -1,20 +1,18 @@
 ---
-title: "Normalfordelingen"
+title: "Hm. noget."
 teaching: 0
 exercises: 0
 questions: 
-- "FIXME"
-
+- "Gad vide hvad der egentlig forsøges forklaret her?"
 objectives:
 - "FIXME"
-
 keypoints:
 - "FIXME"
 source: Rmd
 math: yes
 ---
 
-```{r, include = FALSE}
+```{r SETUP, include = FALSE}
 source("../bin/chunk-options.R")
 knitr_fig_path("08-")
 ```
