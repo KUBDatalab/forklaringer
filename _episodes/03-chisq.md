@@ -13,6 +13,7 @@ objectives:
 keypoints:
 - "FIXME"
 source: Rmd
+math: yes
 ---
 
 
@@ -28,6 +29,19 @@ data
 ~~~
 {: .language-r}
 
+
+
+~~~
+# A tibble: 4 × 3
+  hus        female  male
+  <chr>       <int> <int>
+1 Slytherin      11    14
+2 gryffindor     14    20
+3 hufflepuff      5    11
+4 ravenclaw       6     9
+~~~
+{: .output}
+
 Testen kan/skal kun bruge tal, så vi skiller os af med den første kolonne. Dernæst:
 
 ~~~
@@ -35,38 +49,26 @@ chisq.test(data_1)
 ~~~
 {: .language-r}
 
+
+
+~~~
+
+	Pearson's Chi-squared test
+
+data:  data_1
+X-squared = 0.69669, df = 3, p-value = 0.874
+~~~
+{: .output}
+
 # Hvornår bruger vi den?
 
 Når vi sammenligner fordelinger af kategoriske variable. Kategoriske variable er 
 dem vi kan tælle. Enten er en observation i den ene kategori. Eller også er den
-i en anden kategori.
+i en anden kategori. Altså ting der er enten eller - Ja/Nej spørgsmål er et 
+eksempel. Et andet kunne være køn, så læge vi kun taler om ikke-menneskelige dyr.
 
-Det gennemgående eksempel her er kønsfordelingen i de fire huse i Hogwarts fra 
-Harry Potter universet.
-
-
-$\chi^2$ omfatter flere forskellige tests:
-
-* Fordeling - er data fordelt på den forventede måde (hvor man typisk skal 
-starte med at tage stilling til hvad man forventer)
-
-* Uafhængighedstest - er to fordelinger uafhængige af hinanden
-
-* Homogenitetstest - kommer to (eller flere) stikprøver fra samme fordeling.
-
-Det kan gøres meget struktureret - se xtabs - der viser hvordan man gør det 
-i kontekst af tidymodels.
-
-Hvornår bruger vi den?
-
-Nå vi sammenligner fordelinger af kategoriske variable. Altså
-variable der er "enten-eller". Ja/nej er et godt eksempel. Køn et andet, så længe 
-det kun er ikke-menneskelige dyr vi taler om. 
-Det behøver ikke være ja/nej spørgsmål
-Det kan også være antallet af frakturer
-på bagbenene af en hest. Der kan være en, to eller tre. Men ikke 2½. 
-Eller fire forskellige slags foder til marsvin. 
-
+Det behøver ikke være ja/nej spørgsmål, det kan også være antallet af frakturer
+på bagbenene af heste. Der kan være en, to eller tre, men ikke 2½.
 
 For at testen er valid skal vi opfylde disse kriterier (https://www.jmp.com/en_au/statistics-knowledge-portal/chi-square-test/chi-square-test-of-independence.html):
 
@@ -79,6 +81,22 @@ kontinuerte (i det omfang man kan hævde at tælletal som integers er kontinuert
 * Hvor hver kombination af to værdier/levels af de to variable, skal vi have mindst
 fem forventede værdier. Er der færre end fem hvor hver kombination, er resultaterne
 ikke pålidelige.
+
+
+Det gennemgående eksempel her er kønsfordelingen i de fire huse i Hogwarts fra 
+Harry Potter universet. Det er drenge eller piger - en kategorisk variabel der
+kan tælles. Eller en af Gryffindor, Hufflepuff, Ravenclaw eller Slythering. Også
+en kategorisk variabel der kan tælles. Man kan kun være i ét hus, ikke i to.
+
+
+$\chi^2$ omfatter flere forskellige tests:
+
+* Fordeling - er data fordelt på den forventede måde (hvor man typisk skal 
+starte med at tage stilling til hvad man forventer)
+
+* Uafhængighedstest - er to fordelinger uafhængige af hinanden
+
+* Homogenitetstest - kommer to (eller flere) stikprøver fra samme fordeling.
 
 # Test for Uafhængighed
 
@@ -94,6 +112,25 @@ Er der forskel på kønsfordelingen i de fire huse?
 I stedet for at tælle, hiver vi data ud af KUBDatalabs egen R-pakke. De data
 er igen baseret på data trukket fra wikidata.
 
+Først installerer vi den fra Github:
+
+~~~
+devtools::install_github("KUBDatalab/KUBDatalab")
+
+library(KUBDatalab)
+~~~
+{: .language-r}
+
+Og så har vi data:
+
+
+~~~
+data <- KUBDatalab::hp_characters
+~~~
+{: .language-r}
+
+
+
 Det giver os disse tælletal:
 
 
@@ -101,9 +138,10 @@ Det giver os disse tælletal:
 data %>% kable()
 ~~~
 {: .language-r}
-Det er de faktuelle optællinger. Vi vil nu gerne vide om der er forskel på kønsfordelingen
-i de fire huse. Ikke om der er forskel på hvor mange hunner og hanner der er 
-i Gryffindor. Men om den forskel er forskellig fra forskellen i Ravenclaw.
+Det er de faktuelle optællinger. Vi vil nu gerne vide om der er forskel på 
+kønsfordelingen i de fire huse. Ikke om der er forskel på hvor mange hunner 
+og hanner der er i Gryffindor. Men om den forskel er forskellig fra forskellen 
+i Ravenclaw.
 
 For at finde ud af det, må vi starte med at finde ud af hvad vi ville forvente,
 hvis der ikke er forskel.
@@ -126,8 +164,8 @@ dividere med den totale sum, eksempelvis for kvindelige gryffindors:
 
 34*36/90 = 13.6
 
-Det vi gør er at beregne hvor stor en andel af alle de karakterer vi vi har talt op ialt,
-uafhængig af deres hus, der er af hunkøn.
+Det vi gør er at beregne hvor stor en andel af alle de karakterer vi vi har talt 
+op ialt, uafhængig af deres hus, der er af hunkøn.
 Det er i alt: 36/90 = 0.4, eller 40%.
 
 Der er 34 gryffindor i alt, og hvis fordelingen på køn er den samme for alle husene,
@@ -140,14 +178,19 @@ Den beregning laver vi for alle cellerne i vores datasæt, og får:
 
 
 
-Hvad gør testen nu? Den ser på forskellen mellem hvad vi talte op, og det vi 
-fandt ud af ville være forventet hvis der ikke er nogen forskel på kønsfordelingen blandt
+Det var de forventede værdier. Hvis kønsfordelingen i Slytherin er den samme
+som blandt alle karaktererne, så skal der være 10 hunner og 15 hanner. Det er 
+de værdier vi skal se, hvis der ikke er nogen forskel på kønsfordelingen blandt
 de fire huse.
+
+Hvad gør testen nu? Den ser på forskellen mellem hvad vi talte op, og det vi 
+baseret på de tal, ville forvente hvis der ikke var forskel på kønsfordelingen.
 
 Det gør vi i hver celle. Forskelle kvadreres, og divideres med hvad vi forventede:
 
-Eksempelvis for kvindelige gryffindors:
-(14-13.6)^2/13.6 = 0.01176471
+Eksempelvis for kvindelige gryffindors. Der er 14. det vi forventer er 13.6:
+
+$$(14-13.6)^2/13.6 = 0.01176471$$
 
 
 Det gør vi så for alle kombinationerne, og lægger tallene sammen.
@@ -189,6 +232,18 @@ med antallet af rækker - 1.
 
 Det giver i dette tilfælde (4-1) * (2-1) = 3
 
+Hvad siger frihedsgraderne? De fortæller os hvor mange variable vi selv kan 
+vælge. Vi ved at der er 25 karakterer i Slytherin. Vælger vi at de 11 er kvinder,
+er antallet af mænd i Slytherin automatisk givet. Vi ved også at der er 34 
+Gryffindors. Hvis vi vælger at 20 af dem er mænd, så er antallet af kvinder
+automatisk givet. Vi ved også at der er 16 karakterer i Hufflepuff. Vælger vi at
+der skal være 5 kvinder i det hus, er antallet af mænd i Hufflepuff også givet.
+Nu har vi valgt tre værdier selv. Og fordi vi ved at der er 36 kvinder i alt i 
+datasættet - så er antallet af kvinder i Ravenclaw også givet, og dermed også
+antallet af mænd i samme hus. Med andre ord, givet de totale tal, kan vi kun
+vælge tre forskellige værdier selv, resten gives automatisk ud fra valgene. Derfor
+tre frihedsgrader.
+
 Chi-i-anden værdien for alpha = 0.05, og tre frihedsgrader (df) er 7.815
 
 Hvordan finder vi den? Det gør vi på denne måde:
@@ -197,15 +252,18 @@ Hvordan finder vi den? Det gør vi på denne måde:
 qchisq(p=0.05, df=3, lower.tail = F)
 ~~~
 {: .language-r}
+
 lower.tail = FALSE angiver at vi får P[X>x]. Det skal der lige graves i.
 
-
-Det korte af det lange er, at 0.6966912 er mindre end 7.814. Vi havde en hypotese om 
-at køn og hus var uafhængige, altså at der ikke er forskel på kønsfordelingen i de fire huse.
+Det hele koger ned til, at 0.6966912 er mindre end 7.814. Vi havde en NULL-hypotese 
+om at køn og hus var uafhængige
+de fire huse.
 
 Den hypotese havde vi kunne afvise hvis testværdien, 0.6966912 havde været større end 7.814.
 
-Det kan vi så IKKE. Der lader ikke til at være forskel på kønsfordelingen i de fire huse.
+Det kan vi så IKKE. Vi kan derfor ikke afvise NULL-hypotesen. Og selvom det er 
+lidt iffy at konkludere at de to variable er uafhængige, fordi vi ikke kan afvise 
+at de er uafhængige, så konkluderer vi i almindelighed, at de er uafhængige.
 
 Alt det her gør vi i praksis ikke. Det vi gør er at kaste vores data ind i 
 den rigtige funktion:
@@ -219,41 +277,12 @@ Det vi ser på er p-værdien, der fortæller os, at sandsynligheden for at vi se
 den aktuelle forskel på observerede og forventede værdier, hvis kønsfordelingen er 
 uafhængig af husene, er .874. 
 
-Det bliver lidt nørdet - vi skal have en note om p-værdier også.
-
 Summa-summarum, 0.874 er større end 0.05, der er ikke en forskel.
-
-
-Lidt mere matematisk:
-
-H_0 vores null-hypotese, køn og hus er uafhængige
-H_a vores alternative hypotese, de er ikke uafhængige
-
-Der er en subtil forskel på at sige at de ikke er uafhængige, og at de er afhængige.
-
-Den gennemsnitlige studerende vi hjælper er ligeglad.
-
-Forventede resultater:
-SUM_ij = R_i * C_j 7 N
-
-Teststatistikken:
-SUM_i,j = 1 til n = (O_ij - Eij)^2 / E_ij
-
-notationn for den ktiriske værdi;:
-Chi^2_0.05,3
-
-Der er to muligheder. enten er vores test-statistik lavere end chi^2 værdien.
-Så kan vi ikke afvise hypotesnen om  uafhængighed. Der er ingen sammenhæng mellem
-film og snacks. 
-
-Teststatistikken er højere. Så afviser vi hypotesen om uafhængighed. 
-Det er ikke det samme som at vi kan konkludere at H_a er sand. Blot at H_0 ikke er.
-
-(med 5% sandsynlighed og sådan.)
 
 
 # Hvad får vi ellers:
 
+Det vi umiddelbart får er
 
 ~~~
 test <- chisq.test(data_1)
@@ -261,28 +290,31 @@ test <- chisq.test(data_1)
 test
 ~~~
 {: .language-r}
-der er en del andet output der kan være interessant:
+
+
+
+~~~
+
+	Pearson's Chi-squared test
+
+data:  data_1
+X-squared = 0.69669, df = 3, p-value = 0.874
+~~~
+{: .output}
+
+Men resultatet indeholder en del anden interessant:
+
+
 
 ~~~
 test$residuals
 ~~~
 {: .language-r}
-det var dem vi selv beregnede. sådan da. der er noget med nogle kvadrater. 
+Hvis vi kvadrerer dem, så er det de værdier vi selv fandt ovenfor.
+
+Test-værdien kan trækkes ud på denne måde:
 
 
-~~~
-sqrt(3.29)
-~~~
-{: .language-r}
-Sådan ca. Og hvis vi kvadrerer alle tallene og lægger dem sammen:
-
-~~~
-sum(test$residuals^2)
-~~~
-{: .language-r}
-Får vi søreme vores testværdi!
-
-Som vi også kan trække ud på denne måde:
 
 ~~~
 test$statistic
@@ -297,27 +329,73 @@ test$expected
 ~~~
 {: .language-r}
 
+
+
+~~~
+     female male
+[1,]   10.0 15.0
+[2,]   13.6 20.4
+[3,]    6.4  9.6
+[4,]    6.0  9.0
+~~~
+{: .output}
+
 Og skulle vi have glemt hvilke tal vi puttede ind i funktionen:
 
 ~~~
 test$observed
 ~~~
 {: .language-r}
+
+
+
+~~~
+     female male
+[1,]     11   14
+[2,]     14   20
+[3,]      5   11
+[4,]      6    9
+~~~
+{: .output}
 Skal vi bruge den beregnede p-værdi, så er den der også:
 
 ~~~
 test$p.value
 ~~~
 {: .language-r}
+
+
+
+~~~
+[1] 0.8739819
+~~~
+{: .output}
+
 Tilsvarende med antallet af frihedsgrader:
 
 ~~~
 test$parameter
 ~~~
 {: .language-r}
+
+
+
+~~~
+df 
+ 3 
+~~~
+{: .output}
+
 Har vi glemt hvad det var for en test vi lavede ligger den her:
 
 ~~~
 test$method
 ~~~
 {: .language-r}
+
+
+
+~~~
+[1] "Pearson's Chi-squared test"
+~~~
+{: .output}

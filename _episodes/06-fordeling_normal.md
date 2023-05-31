@@ -37,11 +37,17 @@ beaver1 %>% ggplot(aes(x=temp)) +
 ~~~
 {: .language-r}
 
-<img src="../fig/rmd-06-unnamed-chunk-1-1.png" alt="plot of chunk unnamed-chunk-1" width="612" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="../fig/rmd-06-unnamed-chunk-1-1.png" alt="plot of chunk unnamed-chunk-1" width="612" />
+<p class="caption">plot of chunk unnamed-chunk-1</p>
+</div>
 
 Det ligner lidt den klokkekurve, som de fleste har set på et tidspunkt:
 
-<img src="../fig/rmd-06-klokkekurven-1.png" alt="plot of chunk klokkekurven" width="612" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="../fig/rmd-06-klokkekurven-1.png" alt="plot of chunk klokkekurven" width="612" />
+<p class="caption">plot of chunk klokkekurven</p>
+</div>
 Når vi taler om at noget data er normaltfordelt, så dækker det over at fordelingen
 af data ligner normalfordelingen. Data behøver ikke være 100% fordelt på samme måde som
 normalfordelingen, de skal bare være tæt nok på.
@@ -78,7 +84,10 @@ data.frame(x = seq(35, 39,.01)) %>%
 ~~~
 {: .language-r}
 
-<img src="../fig/rmd-06-unnamed-chunk-2-1.png" alt="plot of chunk unnamed-chunk-2" width="612" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="../fig/rmd-06-unnamed-chunk-2-1.png" alt="plot of chunk unnamed-chunk-2" width="612" />
+<p class="caption">plot of chunk unnamed-chunk-2</p>
+</div>
 Det er også en normalfordeling, den har gennemsnit på 36.86, og en standardafvigelse
 på 0.193.
 
@@ -123,7 +132,10 @@ qqline(beaver1$temp)
 ~~~
 {: .language-r}
 
-<img src="../fig/rmd-06-unnamed-chunk-3-1.png" alt="plot of chunk unnamed-chunk-3" width="612" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="../fig/rmd-06-unnamed-chunk-3-1.png" alt="plot of chunk unnamed-chunk-3" width="612" />
+<p class="caption">plot of chunk unnamed-chunk-3</p>
+</div>
 
 Her får vi plottet, den rette linie, den fordeling vi burde se hvis data var
 normalfordelte. Og, cirklerne, den fordeling vi ser i vores data.

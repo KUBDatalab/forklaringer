@@ -43,7 +43,10 @@ unormalt <- runif(1000)
 ~~~
 {: .language-r}
 
-<img src="../fig/rmd-07-plot_data-1.png" alt="plot of chunk plot_data" width="612" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="../fig/rmd-07-plot_data-1.png" alt="plot of chunk plot_data" width="612" />
+<p class="caption">plot of chunk plot_data</p>
+</div>
 
 Det letter forståelsen af p-værdier når vi tester herunder.
 
@@ -58,7 +61,10 @@ data.frame(x = seq(-3,3,.1)) %>%
 ~~~
 {: .language-r}
 
-<img src="../fig/rmd-07-unnamed-chunk-1-1.png" alt="plot of chunk unnamed-chunk-1" width="612" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="../fig/rmd-07-unnamed-chunk-1-1.png" alt="plot of chunk unnamed-chunk-1" width="612" />
+<p class="caption">plot of chunk unnamed-chunk-1</p>
+</div>
 
 Dette er en normalfordeling. Den har middelværdien 0, og en standardafvigelse
 på 1. Når vi vil vide hvad sandsynligheden for at se værdien 0, så finder vi 0 på x-aksen, og aflæser værdien på y-aksen.
@@ -93,7 +99,10 @@ tibble(normalt) %>%
 ~~~
 {: .language-r}
 
-<img src="../fig/rmd-07-unnamed-chunk-2-1.png" alt="plot of chunk unnamed-chunk-2" width="612" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="../fig/rmd-07-unnamed-chunk-2-1.png" alt="plot of chunk unnamed-chunk-2" width="612" />
+<p class="caption">plot of chunk unnamed-chunk-2</p>
+</div>
 Den rette linie er normalfordelingen. Og punkterne er vores observationer. Og det er ikke helt skævt. Det skal det heller ikke være. Data er konstruerede til at være normalfordelte.
 
 De unormale data derimod ligger ikke så pænt:
@@ -107,7 +116,10 @@ tibble(unormalt) %>%
 ~~~
 {: .language-r}
 
-<img src="../fig/rmd-07-unormalt_qq_plot-1.png" alt="plot of chunk unormalt_qq_plot" width="612" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="../fig/rmd-07-unormalt_qq_plot-1.png" alt="plot of chunk unormalt_qq_plot" width="612" />
+<p class="caption">plot of chunk unormalt_qq_plot</p>
+</div>
 
 ## Hvad er der af tests?
 
@@ -140,7 +152,7 @@ shapiro.test(normalt)
 	Shapiro-Wilk normality test
 
 data:  normalt
-W = 0.99922, p-value = 0.9602
+W = 0.99891, p-value = 0.8206
 ~~~
 {: .output}
 p-værdien er >0.1, så vi kan ikke afvise 0-hypotesen om at data er normalfordelte.
@@ -160,7 +172,7 @@ shapiro.test(unormalt)
 	Shapiro-Wilk normality test
 
 data:  unormalt
-W = 0.95509, p-value < 2.2e-16
+W = 0.95616, p-value < 2.2e-16
 ~~~
 {: .output}
 Meget lav p-værdi. Så vi afviser 0-hypotesen om at data er normalfordelte.
@@ -189,7 +201,7 @@ ks.test(normalt, "pnorm", mean(normalt, sd(normalt)))
 	Asymptotic one-sample Kolmogorov-Smirnov test
 
 data:  normalt
-D = 0.013553, p-value = 0.9929
+D = 0.027867, p-value = 0.4192
 alternative hypothesis: two-sided
 ~~~
 {: .output}
@@ -210,7 +222,7 @@ ks.test(unormalt, "pnorm", mean(unormalt, sd(unormalt)))
 	Asymptotic one-sample Kolmogorov-Smirnov test
 
 data:  unormalt
-D = 0.30888, p-value < 2.2e-16
+D = 0.31754, p-value < 2.2e-16
 alternative hypothesis: two-sided
 ~~~
 {: .output}
@@ -238,7 +250,7 @@ ad.test(normalt)
 	Anderson-Darling normality test
 
 data:  normalt
-A = 0.14673, p-value = 0.9669
+A = 0.28837, p-value = 0.6169
 ~~~
 {: .output}
 p-værdien er større end 0.05, og vi konkluderer derfor at 0-hypotesen ikke kan afvises, og at vores data derfor er normalfordelte.
@@ -257,7 +269,7 @@ ad.test(unormalt)
 	Anderson-Darling normality test
 
 data:  unormalt
-A = 10.715, p-value < 2.2e-16
+A = 10.759, p-value < 2.2e-16
 ~~~
 {: .output}
 Her er p-værdien meget lille, og vi afviser derfor 0-hypotesen om at data er normalfordelte. 
@@ -311,7 +323,7 @@ cvm.test(normalt, 'pnorm')
 	Parameters assumed to be fixed
 
 data:  normalt
-omega2 = 0.028725, p-value = 0.9802
+omega2 = 0.25485, p-value = 0.1823
 ~~~
 {: .output}
 p-værdien er meget højere end 0.05, og vi kan derfor ikke afvise 0-hypotesen om at data er normalfordelte.
@@ -333,7 +345,7 @@ cvm.test(unormalt, 'pnorm')
 	Parameters assumed to be fixed
 
 data:  unormalt
-omega2 = 69.923, p-value < 2.2e-16
+omega2 = 72.651, p-value < 2.2e-16
 ~~~
 {: .output}
 Her er p-værdien meget mindre end 0.05, og vi afviser derfor 0-hypotesen om at data er normalfordelte.
@@ -357,7 +369,7 @@ lillie.test(normalt)
 	Lilliefors (Kolmogorov-Smirnov) normality test
 
 data:  normalt
-D = 0.012763, p-value = 0.958
+D = 0.018075, p-value = 0.5949
 ~~~
 {: .output}
 Ikke-normaltfordelte data:
@@ -374,7 +386,7 @@ lillie.test(unormalt)
 	Lilliefors (Kolmogorov-Smirnov) normality test
 
 data:  unormalt
-D = 0.063196, p-value = 4.305e-10
+D = 0.062646, p-value = 6.584e-10
 ~~~
 {: .output}
 Lilliefors testen er en variant over Kolmogorov-Smirnov-testen, der 

@@ -35,16 +35,16 @@ test_data
 
 ~~~
             x          y
-1  -0.5834970  0.1714926
-2  -1.3935274  1.3844773
-3   2.2744174 -1.7321887
-4  -0.3770047 -0.4724175
-5  -1.3122469  0.5550489
-6   2.6721631  2.4761828
-7   3.9023787  3.1805996
-8   3.7208689  2.3449883
-9   5.9237508  3.5394064
-10  3.5549863  4.0664829
+1   0.6885121  1.1351120
+2   1.9351596  0.1672085
+3  -0.8646314 -1.2026788
+4   0.3567034  1.1833013
+5  -0.5335850  0.5034416
+6   2.2392710  1.2207166
+7   2.3586442  4.4276214
+8   2.4077571  3.8699787
+9   2.9859845  4.2875114
+10  3.4792465  2.0288739
 ~~~
 {: .output}
 Plotter vi dem er det tydeligt at der er struktur i data:
@@ -55,7 +55,10 @@ ggplot(test_data, aes(x,y)) +
 ~~~
 {: .language-r}
 
-<img src="../fig/rmd-09-unnamed-chunk-2-1.png" alt="plot of chunk unnamed-chunk-2" width="612" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="../fig/rmd-09-unnamed-chunk-2-1.png" alt="plot of chunk unnamed-chunk-2" width="612" />
+<p class="caption">plot of chunk unnamed-chunk-2</p>
+</div>
 Kan vi få computeren til at identificere den struktur?
 
 Ja:
@@ -68,19 +71,19 @@ kmeans(test_data, 2)
 
 
 ~~~
-K-means clustering with 2 clusters of sizes 5, 5
+K-means clustering with 2 clusters of sizes 6, 4
 
 Cluster means:
-           x           y
-1  3.9548296  3.12153200
-2 -0.2783717 -0.01871747
+         x         y
+1 0.636905 0.5011835
+2 2.807908 3.6534963
 
 Clustering vector:
- [1] 2 2 2 2 2 1 1 1 1 1
+ [1] 1 1 1 1 1 1 2 2 2 2
 
 Within cluster sum of squares by cluster:
-[1]  7.829784 14.408203
- (between_SS / total_SS =  75.7 %)
+[1] 12.358446  4.531873
+ (between_SS / total_SS =  67.6 %)
 
 Available components:
 
@@ -155,7 +158,7 @@ sum(cluster2$.cluster != cluster1$.cluster)
 
 
 ~~~
-[1] 960
+[1] 962
 ~~~
 {: .output}
 Hvis de var det, ville ovenstående resultat være 0. Det er det ikke.
@@ -173,14 +176,20 @@ første + anden
 ~~~
 {: .language-r}
 
-<img src="../fig/rmd-09-unnamed-chunk-8-1.png" alt="plot of chunk unnamed-chunk-8" width="612" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="../fig/rmd-09-unnamed-chunk-8-1.png" alt="plot of chunk unnamed-chunk-8" width="612" />
+<p class="caption">plot of chunk unnamed-chunk-8</p>
+</div>
 
 k-means algoritmen er følsom overfor de tilfældige centroider der vælges i starten af den. Den bør dog, hvis der faktisk er struktur i data, 
 give ca. samme resultat.
 
 Der er data med tydelig struktur, hvor kmeans ikke kan finde den:
 
-<img src="../fig/rmd-09-sfærisk_data-1.png" alt="plot of chunk sfærisk_data" width="612" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="../fig/rmd-09-sfærisk_data-1.png" alt="plot of chunk sfærisk_data" width="612" />
+<p class="caption">plot of chunk sfærisk_data</p>
+</div>
 Her er der tydelig struktur. En klasse ligger inde omkring 0,0, en anden klasse ligger rundt om, med pæn afstand til den første klasse.
 
 Når vi træner en k-means model på det data, får vi ikke helt det vi forventer:
@@ -198,5 +207,8 @@ ggplot(cluster3, aes(x,y,color=.cluster)) +
 ~~~
 {: .language-r}
 
-<img src="../fig/rmd-09-unnamed-chunk-10-1.png" alt="plot of chunk unnamed-chunk-10" width="612" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="../fig/rmd-09-unnamed-chunk-10-1.png" alt="plot of chunk unnamed-chunk-10" width="612" />
+<p class="caption">plot of chunk unnamed-chunk-10</p>
+</div>
 

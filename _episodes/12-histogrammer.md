@@ -46,7 +46,10 @@ Warning: Removed 2 rows containing non-finite values (`stat_bin()`).
 ~~~
 {: .warning}
 
-<img src="../fig/rmd-12-unnamed-chunk-2-1.png" alt="plot of chunk unnamed-chunk-2" width="612" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="../fig/rmd-12-unnamed-chunk-2-1.png" alt="plot of chunk unnamed-chunk-2" width="612" />
+<p class="caption">plot of chunk unnamed-chunk-2</p>
+</div>
 
 Der er her 30 bins. Vores data, næblængden på nogle pingviner, 
 falder i intervallet 32.1 til 59.6 millimeter. Hver bin er derfor
@@ -383,7 +386,10 @@ Warning: Removed 2 rows containing non-finite values (`stat_bin()`).
 ~~~
 {: .warning}
 
-<img src="../fig/rmd-12-unnamed-chunk-11-1.png" alt="plot of chunk unnamed-chunk-11" width="612" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="../fig/rmd-12-unnamed-chunk-11-1.png" alt="plot of chunk unnamed-chunk-11" width="612" />
+<p class="caption">plot of chunk unnamed-chunk-11</p>
+</div>
 
 
 Bruger man i stedet en metode der giver os bredden af bins, 
@@ -406,7 +412,10 @@ Warning: Removed 2 rows containing non-finite values (`stat_bin()`).
 ~~~
 {: .warning}
 
-<img src="../fig/rmd-12-unnamed-chunk-12-1.png" alt="plot of chunk unnamed-chunk-12" width="612" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="../fig/rmd-12-unnamed-chunk-12-1.png" alt="plot of chunk unnamed-chunk-12" width="612" />
+<p class="caption">plot of chunk unnamed-chunk-12</p>
+</div>
 
 ## Hvilken skal man så vælge?
 

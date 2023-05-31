@@ -45,11 +45,13 @@ underliggende faktorer der er, og hvilke variable der forklares af disse
 faktorer. 
 
 Ordene vi bruger, er at vi har manifeste variable - det er dem vi måler. 
-Og latenten variable, det er dem vi forsøger at identificere.
+Og latente variable, det er dem vi forsøger at identificere.
 
 Metoden er meget brugt i psykologien, hvorfra eksemplerne også stammer.
 
-Til det bruger vi biblioteket lavaan, latent variable analysis.
+
+## Hvordan gør vi så?
+Vi bruger biblioteket lavaan, latent variable analysis.
 
 
 
@@ -102,7 +104,8 @@ The following objects are masked from 'package:ggplot2':
 
 ## hvordan gør vi?
 
-Et klassisk datasæt til formålet. Holzinger-Swineford. Kognitive tests af 
+Vi skal bruge et datasæt. Et klassisk et af slagsen er Holzinger-Swineford. 
+Det er fra kognitive tests af 
 7. og 8. klasses elever fra to forskellige skoler. Som navnet antyder,
 foretaget i 1939.
 
@@ -148,10 +151,12 @@ De unge mennesker blev testet på 9 parametre.
 * x8 speeded counting of dots
 * x9 speeded discrimination straight and curved capitals
 
-Tesen er at der i deres test er en visuel faktor. x1, x2 og x3
-en sproglig faktor, x4, x5 og x6
-og en hurtighedsfaktor
-x7, x8 og x9
+Tesen er at der i deres test er en visuel faktor, der er den 
+latente variabel bag de manifeste variable x1, x2 og x3
+
+En sproglig faktor/latent variabel, der ligger bag x4, x5 og x6
+
+Og en hurtighedsfaktor/latent variabel: x7, x8 og x9
 
 
 vi opstiller en model, der ser lidt usædvanlig ud:
@@ -337,6 +342,7 @@ x8 0.309 0.171 0.226 0.205 0.228 0.190 0.453 1.022
 x9 0.284 0.157 0.207 0.188 0.209 0.174 0.415 0.490 1.015
 ~~~
 {: .output}
+
 Koefficienter:
 
 ~~~
@@ -361,6 +367,7 @@ textual~~textual     speed~~speed  visual~~textual    visual~~speed
            0.173 
 ~~~
 {: .output}
+
 Og residualerne:
 
 ~~~
@@ -387,17 +394,36 @@ x8 -0.655 -0.896 -0.200 -1.162 -0.624 -0.375  1.170  0.000
 x9  2.405  1.249  2.420  0.808  1.126  0.958 -0.625 -0.504  0.000
 ~~~
 {: .output}
+
 Vi kan også få et fint plot med vores fit. Der kan vi bruge pakken *semPlot*:
 
 
 ~~~
 library(semPlot)
+~~~
+{: .language-r}
+
+
+
+~~~
+Error in library(semPlot): there is no package called 'semPlot'
+~~~
+{: .error}
+
+
+
+~~~
 semPaths(fit, "std", layout = "tree", intercepts = F, residuals = T, nDigits = 2, 
          label.cex = 1, edge.label.cex=.95, fade = F)
 ~~~
 {: .language-r}
 
-<img src="../fig/rmd-04-unnamed-chunk-11-1.png" alt="plot of chunk unnamed-chunk-11" width="612" style="display: block; margin: auto;" />
+
+
+~~~
+Error in semPaths(fit, "std", layout = "tree", intercepts = F, residuals = T, : could not find function "semPaths"
+~~~
+{: .error}
 
 
 ## Men det er ikke første skridt.
@@ -408,7 +434,7 @@ factor analysis) hvor ideen er at identificere de latente variable.
 Vi kan godt komme med et kvalificeret bud i dette tilfælde. Især hvis vi på
 forhånd ved at der skal være tre latente variable.
 
-## Eksplorativ Faktor Analyse
+### Eksplorativ Faktor Analyse
 
 Det er teknikken når vi skal identificere de latente faktorer.
 
@@ -418,6 +444,7 @@ Funktionen hedder fa, for faktor analyse. Den kommer fra biblioteket *psych*:
 
 
 ~~~
+library(psych)
 hs.efa <- fa(select(HolzingerSwineford1939, x1:x9), nfactors = 8, 
              rotate = "none", fm = "ml")
 hs.efa
@@ -475,8 +502,21 @@ Minimum correlation of possible factor scores     -0.60 -0.66 -0.75
 ~~~
 {: .output}
 
-Når vi skal finde ud af hvor mange latente variable der bør bruges er en af 
-måderne at lave et screeplot:
+Vi får "factor loadings" ud. De kan "roteres", udsættes for en matematisk 
+transformation, der kan gøre det lettere at fortolke de latente faktorer.
+I praksis fatter vi ikke meget af dem her - så den springer vi over.
+
+fm argumentet styrer hvordan der faktoriseres. Her har vi valgt "ml", der laver
+noget maximum likelyhood. 
+
+Vi leder efter latente faktorer - så derfor har vi sat antallet af faktorer
+funktionen skal give os til 8, en mindre end de 9 manifeste faktorer. Målet er 
+jo at komme ned på færre end vi startede med.
+
+Hvor mange latente variable skal der så til for at beskrive vores data?
+
+En af 
+måderne at besvare det spørgsmål på, at lave et screeplot:
 
 
 ~~~
@@ -484,13 +524,17 @@ plot(hs.efa$e.values)
 ~~~
 {: .language-r}
 
-<img src="../fig/rmd-04-unnamed-chunk-13-1.png" alt="plot of chunk unnamed-chunk-13" width="612" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="../fig/rmd-04-unnamed-chunk-13-1.png" alt="plot of chunk unnamed-chunk-13" width="612" />
+<p class="caption">plot of chunk unnamed-chunk-13</p>
+</div>
 
 Det giver os et bud på hvor meget forklaringskraft vores model har med forskellige
 antal latente variable. Vi får rigtig meget ekstra forklaringskraft ved at 
 gå fra en til to latente variable. En sjat mere med at gå fra to til tre, og 
 endnu mere ved at gå fra tre til fire. Mens det at tilføje en femte latent
-variabel ikke giver ret meget mere. 
+variabel ikke giver ret meget mere. Så vi skal højest have fire latente variable
+i vores model
 
 Vi kan lave yderligere et plot:
 
@@ -499,7 +543,10 @@ fa.parallel(select(HolzingerSwineford1939, x1:x9), fa = "fa", fm = "ml")
 ~~~
 {: .language-r}
 
-<img src="../fig/rmd-04-unnamed-chunk-14-1.png" alt="plot of chunk unnamed-chunk-14" width="612" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="../fig/rmd-04-unnamed-chunk-14-1.png" alt="plot of chunk unnamed-chunk-14" width="612" />
+<p class="caption">plot of chunk unnamed-chunk-14</p>
+</div>
 
 ~~~
 Parallel analysis suggests that the number of factors =  3  and the number of components =  NA 
@@ -508,7 +555,9 @@ Parallel analysis suggests that the number of factors =  3  and the number of co
 Her sammenligner vi vores data, som forklaret i modellen (blå linie) med 
 simuleret, tilfældig data (røde linier). Det ser ud til at 3 faktorer ligger over
 tilfældig støj. Tilføjer vi en fjerde latent variabel til modellen ligger
-den ekstra forklaringskraft nede i støjen.
+den ekstra forklaringskraft nede i støjen. Så selvom det lige før så ud som om 
+det var en god ide at tilføje en fjerde latent variabel, får vi reelt ikke mere
+ud af den. Den begynder bare at forklare støj i vores data.
 
 Så vi går efter tre latente variable.
 
@@ -617,7 +666,7 @@ Confirmatory Factor Analysis afsnittet.
 Det er folk sjældent. Men det bør vi. Det vi bør gøre, er at indsamle data,
 lave vores eksplorative faktor analyse, og opstille modellen.
 
-Herefter samler vi nyt data ind, og bruger det til at bekræfte vores model.
+Herefter indsamler vi nye data, og bruger det til at bekræfte vores model.
 
 I praksis bruger folk samme datasæt til begge dele. Det er en diskussion værd
 om det er god praksis, og vi bør fortælle de studerende at de snyder. 

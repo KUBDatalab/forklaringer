@@ -9,6 +9,9 @@ output: html_document
 
 
 
+https://cran.r-project.org/web/packages/Rforestry/index.html er
+værd at kigge på.
+
 baseret på https://www.tidymodels.org/learn/statistics/xtabs/
 
 Dette er mere noter om tidymodels end så meget andet. Men vi ser på 

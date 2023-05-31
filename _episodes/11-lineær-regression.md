@@ -92,7 +92,10 @@ rnorm(100, mean = 5, sd = 3) %>% hist()
 ~~~
 {: .language-r}
 
-<img src="../fig/rmd-11-unnamed-chunk-3-1.png" alt="plot of chunk unnamed-chunk-3" width="612" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="../fig/rmd-11-unnamed-chunk-3-1.png" alt="plot of chunk unnamed-chunk-3" width="612" />
+<p class="caption">plot of chunk unnamed-chunk-3</p>
+</div>
 
 ~~~
 shapiro.test(runif(100, min = 2, max = 4)) 
@@ -117,7 +120,10 @@ runif(100, min = 2, max = 4)%>% hist()
 ~~~
 {: .language-r}
 
-<img src="../fig/rmd-11-unnamed-chunk-3-2.png" alt="plot of chunk unnamed-chunk-3" width="612" style="display: block; margin: auto;" />
+<div class="figure" style="text-align: center">
+<img src="../fig/rmd-11-unnamed-chunk-3-2.png" alt="plot of chunk unnamed-chunk-3" width="612" />
+<p class="caption">plot of chunk unnamed-chunk-3</p>
+</div>
 
 
 ## Skal det være normalfordelt? 
