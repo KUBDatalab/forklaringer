@@ -34,17 +34,17 @@ test_data
 
 
 ~~~
-            x          y
-1   0.6885121  1.1351120
-2   1.9351596  0.1672085
-3  -0.8646314 -1.2026788
-4   0.3567034  1.1833013
-5  -0.5335850  0.5034416
-6   2.2392710  1.2207166
-7   2.3586442  4.4276214
-8   2.4077571  3.8699787
-9   2.9859845  4.2875114
-10  3.4792465  2.0288739
+             x           y
+1  -0.62787798  2.54660901
+2   0.10474328 -0.03487948
+3  -1.43921070  0.56737847
+4   0.05412057 -0.30479742
+5  -0.71623130  0.42852419
+6   3.37209787  3.78697386
+7   2.16238660  3.55299244
+8   3.38506353  3.72626843
+9   2.41151572  3.84514552
+10  2.95310256  3.87960570
 ~~~
 {: .output}
 Plotter vi dem er det tydeligt at der er struktur i data:
@@ -71,19 +71,19 @@ kmeans(test_data, 2)
 
 
 ~~~
-K-means clustering with 2 clusters of sizes 6, 4
+K-means clustering with 2 clusters of sizes 5, 5
 
 Cluster means:
-         x         y
-1 0.636905 0.5011835
-2 2.807908 3.6534963
+           x        y
+1  2.8568333 3.758197
+2 -0.5248912 0.640567
 
 Clustering vector:
- [1] 1 1 1 1 1 1 2 2 2 2
+ [1] 2 2 2 2 2 1 1 1 1 1
 
 Within cluster sum of squares by cluster:
-[1] 12.358446  4.531873
- (between_SS / total_SS =  67.6 %)
+[1] 1.300613 6.648148
+ (between_SS / total_SS =  86.9 %)
 
 Available components:
 
@@ -158,7 +158,7 @@ sum(cluster2$.cluster != cluster1$.cluster)
 
 
 ~~~
-[1] 962
+[1] 797
 ~~~
 {: .output}
 Hvis de var det, ville ovenstående resultat være 0. Det er det ikke.

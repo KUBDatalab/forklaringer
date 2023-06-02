@@ -226,32 +226,32 @@ Confusion Matrix and Statistics
 
            Reference
 Prediction  Adelie Chinstrap Gentoo
-  Adelie        28         2      1
-  Chinstrap      0        12      0
-  Gentoo         0         0     28
+  Adelie        31         0      0
+  Chinstrap      2        14      0
+  Gentoo         0         0     24
 
 Overall Statistics
                                           
-               Accuracy : 0.9577          
-                 95% CI : (0.8814, 0.9912)
-    No Information Rate : 0.4085          
+               Accuracy : 0.9718          
+                 95% CI : (0.9019, 0.9966)
+    No Information Rate : 0.4648          
     P-Value [Acc > NIR] : < 2.2e-16       
                                           
-                  Kappa : 0.9333          
+                  Kappa : 0.9559          
                                           
  Mcnemar's Test P-Value : NA              
 
 Statistics by Class:
 
                      Class: Adelie Class: Chinstrap Class: Gentoo
-Sensitivity                 1.0000           0.8571        0.9655
-Specificity                 0.9302           1.0000        1.0000
-Pos Pred Value              0.9032           1.0000        1.0000
-Neg Pred Value              1.0000           0.9661        0.9767
-Prevalence                  0.3944           0.1972        0.4085
-Detection Rate              0.3944           0.1690        0.3944
-Detection Prevalence        0.4366           0.1690        0.3944
-Balanced Accuracy           0.9651           0.9286        0.9828
+Sensitivity                 0.9394           1.0000         1.000
+Specificity                 1.0000           0.9649         1.000
+Pos Pred Value              1.0000           0.8750         1.000
+Neg Pred Value              0.9500           1.0000         1.000
+Prevalence                  0.4648           0.1972         0.338
+Detection Rate              0.4366           0.1972         0.338
+Detection Prevalence        0.4366           0.2254         0.338
+Balanced Accuracy           0.9697           0.9825         1.000
 ~~~
 {: .output}
 Det gik fint. Der er lidt forvirring i modellen - Et par chinstrap pingviner
@@ -280,38 +280,38 @@ naiveBayes.default(x = X, y = Y, laplace = laplace)
 A-priori probabilities:
 Y
    Adelie Chinstrap    Gentoo 
-0.4542125 0.1978022 0.3479853 
+0.4358974 0.1978022 0.3663004 
 
 Conditional probabilities:
            bill_length_mm
 Y               [,1]     [,2]
-  Adelie    38.85242 2.604170
-  Chinstrap 48.61111 3.266102
-  Gentoo    47.71474 3.220842
+  Adelie    38.64370 2.541074
+  Chinstrap 48.80185 3.517262
+  Gentoo    47.51515 3.115379
 
            bill_depth_mm
 Y               [,1]      [,2]
-  Adelie    18.36613 1.2493177
-  Chinstrap 18.34630 1.0945341
-  Gentoo    15.06211 0.9814426
+  Adelie    18.33529 1.1899002
+  Chinstrap 18.45185 1.1659866
+  Gentoo    14.97071 0.9759613
 
            flipper_length_mm
 Y               [,1]     [,2]
-  Adelie    190.0081 6.760113
-  Chinstrap 195.6852 7.043863
-  Gentoo    218.0526 6.284680
+  Adelie    189.8992 6.652889
+  Chinstrap 195.8333 7.434621
+  Gentoo    217.1010 6.410283
 
            body_mass_g
 Y               [,1]     [,2]
-  Adelie    3710.484 469.9409
-  Chinstrap 3730.093 388.1615
-  Gentoo    5096.579 486.5698
+  Adelie    3684.244 461.4695
+  Chinstrap 3727.315 401.3030
+  Gentoo    5083.333 489.2336
 
            sex
 Y              female      male
-  Adelie    0.4916667 0.5083333
-  Chinstrap 0.5370370 0.4629630
-  Gentoo    0.4395604 0.5604396
+  Adelie    0.5043478 0.4956522
+  Chinstrap 0.5185185 0.4814815
+  Gentoo    0.4895833 0.5104167
 ~~~
 {: .output}
 Det bliver en del mere komplekst når der er flere parametre involveret.
