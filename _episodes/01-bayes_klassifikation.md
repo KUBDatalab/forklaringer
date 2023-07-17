@@ -51,7 +51,7 @@ library(tidymodels)
 
 
 ~~~
-✔ broom        1.0.4     ✔ recipes      1.0.6
+✔ broom        1.0.5     ✔ recipes      1.0.6
 ✔ dials        1.2.0     ✔ rsample      1.1.1
 ✔ dplyr        1.1.2     ✔ tibble       3.2.1
 ✔ ggplot2      3.4.2     ✔ tidyr        1.3.0
@@ -70,7 +70,7 @@ library(tidymodels)
 ✖ dplyr::filter()  masks stats::filter()
 ✖ dplyr::lag()     masks stats::lag()
 ✖ recipes::step()  masks stats::step()
-• Use tidymodels_prefer() to resolve common conflicts.
+• Search for functions across packages at https://www.tidymodels.org/find/
 ~~~
 {: .output}
 
@@ -227,31 +227,31 @@ Confusion Matrix and Statistics
            Reference
 Prediction  Adelie Chinstrap Gentoo
   Adelie        31         0      0
-  Chinstrap      2        14      0
-  Gentoo         0         0     24
+  Chinstrap      0         9      0
+  Gentoo         0         0     23
 
 Overall Statistics
-                                          
-               Accuracy : 0.9718          
-                 95% CI : (0.9019, 0.9966)
-    No Information Rate : 0.4648          
-    P-Value [Acc > NIR] : < 2.2e-16       
-                                          
-                  Kappa : 0.9559          
-                                          
- Mcnemar's Test P-Value : NA              
+                                     
+               Accuracy : 1          
+                 95% CI : (0.9431, 1)
+    No Information Rate : 0.4921     
+    P-Value [Acc > NIR] : < 2.2e-16  
+                                     
+                  Kappa : 1          
+                                     
+ Mcnemar's Test P-Value : NA         
 
 Statistics by Class:
 
                      Class: Adelie Class: Chinstrap Class: Gentoo
-Sensitivity                 0.9394           1.0000         1.000
-Specificity                 1.0000           0.9649         1.000
-Pos Pred Value              1.0000           0.8750         1.000
-Neg Pred Value              0.9500           1.0000         1.000
-Prevalence                  0.4648           0.1972         0.338
-Detection Rate              0.4366           0.1972         0.338
-Detection Prevalence        0.4366           0.2254         0.338
-Balanced Accuracy           0.9697           0.9825         1.000
+Sensitivity                 1.0000           1.0000        1.0000
+Specificity                 1.0000           1.0000        1.0000
+Pos Pred Value              1.0000           1.0000        1.0000
+Neg Pred Value              1.0000           1.0000        1.0000
+Prevalence                  0.4921           0.1429        0.3651
+Detection Rate              0.4921           0.1429        0.3651
+Detection Prevalence        0.4921           0.1429        0.3651
+Balanced Accuracy           1.0000           1.0000        1.0000
 ~~~
 {: .output}
 Det gik fint. Der er lidt forvirring i modellen - Et par chinstrap pingviner
@@ -280,38 +280,38 @@ naiveBayes.default(x = X, y = Y, laplace = laplace)
 A-priori probabilities:
 Y
    Adelie Chinstrap    Gentoo 
-0.4358974 0.1978022 0.3663004 
+0.4306050 0.2099644 0.3594306 
 
 Conditional probabilities:
            bill_length_mm
 Y               [,1]     [,2]
-  Adelie    38.64370 2.541074
-  Chinstrap 48.80185 3.517262
-  Gentoo    47.51515 3.115379
+  Adelie    38.91417 2.709501
+  Chinstrap 48.55932 3.442088
+  Gentoo    47.54100 2.934129
 
            bill_depth_mm
-Y               [,1]      [,2]
-  Adelie    18.33529 1.1899002
-  Chinstrap 18.45185 1.1659866
-  Gentoo    14.97071 0.9759613
+Y               [,1]     [,2]
+  Adelie    18.45417 1.247175
+  Chinstrap 18.28814 1.112637
+  Gentoo    14.99800 1.017422
 
            flipper_length_mm
 Y               [,1]     [,2]
-  Adelie    189.8992 6.652889
-  Chinstrap 195.8333 7.434621
-  Gentoo    217.1010 6.410283
+  Adelie    189.7500 6.847989
+  Chinstrap 194.9831 7.025794
+  Gentoo    217.3700 6.566913
 
            body_mass_g
 Y               [,1]     [,2]
-  Adelie    3684.244 461.4695
-  Chinstrap 3727.315 401.3030
-  Gentoo    5083.333 489.2336
+  Adelie    3716.667 454.6600
+  Chinstrap 3693.220 365.9197
+  Gentoo    5086.500 502.8507
 
            sex
 Y              female      male
-  Adelie    0.5043478 0.4956522
-  Chinstrap 0.5185185 0.4814815
-  Gentoo    0.4895833 0.5104167
+  Adelie    0.4655172 0.5344828
+  Chinstrap 0.5593220 0.4406780
+  Gentoo    0.4583333 0.5416667
 ~~~
 {: .output}
 Det bliver en del mere komplekst når der er flere parametre involveret.

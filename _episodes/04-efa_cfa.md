@@ -400,30 +400,15 @@ Vi kan også få et fint plot med vores fit. Der kan vi bruge pakken *semPlot*:
 
 ~~~
 library(semPlot)
-~~~
-{: .language-r}
-
-
-
-~~~
-Error in library(semPlot): there is no package called 'semPlot'
-~~~
-{: .error}
-
-
-
-~~~
 semPaths(fit, "std", layout = "tree", intercepts = F, residuals = T, nDigits = 2, 
          label.cex = 1, edge.label.cex=.95, fade = F)
 ~~~
 {: .language-r}
 
-
-
-~~~
-Error in semPaths(fit, "std", layout = "tree", intercepts = F, residuals = T, : could not find function "semPaths"
-~~~
-{: .error}
+<div class="figure" style="text-align: center">
+<img src="../fig/rmd-04-unnamed-chunk-11-1.png" alt="plot of chunk unnamed-chunk-11" width="612" />
+<p class="caption">plot of chunk unnamed-chunk-11</p>
+</div>
 
 
 ## Men det er ikke første skridt.
